@@ -1,6 +1,7 @@
 using Raccoon.InputCtr;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.Serialization;
 
 namespace Raccoon.Player
@@ -37,6 +38,8 @@ namespace Raccoon.Player
         [Tooltip("Chiều cao ray kiểm tra ở ngực, dùng để bắt đầu leo thang")]
         [SerializeField] private float chestHeight = 1f;
         private bool ladderInRange;
+
+        bool climbing;
 
         Rigidbody rb;
         PlayerInput input;
@@ -110,7 +113,15 @@ namespace Raccoon.Player
 
             CheckClamp();
 
-            FixedUpdateImpl();
+            if (climbing)
+            {
+                ResetMove();
+                HandleClimbing();
+            }
+            else
+            {
+                FixedUpdateImpl();
+            }
         }
         void CheckClamp()
         {
@@ -124,18 +135,65 @@ namespace Raccoon.Player
                 if (approachDot > 0.3f)
                 {
                     // moveDir đang hướng VÀO thang -> cho leo
-                    Debug.Log("clamp ");
+                    StartClimbing(hit);
                 }
                 else
                 {
+                    //climbing = false;
                     // moveDir hướng RA XA hoặc đi ngang qua thang -> đi bộ bình thường, không leo
-                    Debug.Log("move out ");
 
                 }
             }
         }
 
+        private Vector3 currentLadderNormal;
+        private Vector3 currentLadderRight; // tính 1 lần khi StartClimbing, lưu lại để không đổi giữa chừng
 
+        private void StartClimbing(RaycastHit ladderHit)
+        {
+            climbing = true;
+
+            currentLadderNormal = ladderHit.normal;
+            currentLadderRight = Vector3.Cross(Vector3.up, currentLadderNormal).normalized;
+
+            transform.rotation = Quaternion.LookRotation(-currentLadderNormal, Vector3.up);
+
+        }
+        private void HandleClimbing()
+        {
+            // Mặt luôn hướng vào thang, không xoay theo input nữa
+            transform.rotation = Quaternion.LookRotation(-currentLadderNormal, Vector3.up);
+
+            float h = input.horizontalAxis;
+            float v = input.verticalAxis;
+
+            // Không qua camera/moveDir nữa: dùng thẳng input làm 2 trục leo
+            float verticalInput = v;   // >0: leo lên, <0: leo xuống
+            float horizontalInput = -h; // >0: qua phải, <0: qua trái
+
+            //// Chặn shimmy đi lố khỏi mép thang (trái/phải)
+            //if (Mathf.Abs(horizontalInput) > 0.01f)
+            //{
+            //    Vector3 sideOrigin = rb.position + Vector3.up * chestHeight;
+            //    Vector3 sideDir = horizontalInput > 0f ? currentLadderRight : -currentLadderRight;
+
+            //    RaycastHit sideHit;
+            //    bool sideHasLadder = Physics.Raycast(sideOrigin + sideDir * sideCheckOffset,
+            //                                          -currentLadderNormal, out sideHit, rayDistance, ladderLayer);
+            //    if (!sideHasLadder) horizontalInput = 0f;
+            //}
+
+            Vector3 climbMove = (Vector3.up * verticalInput + currentLadderRight * horizontalInput)
+                                 * climbSpeed * Time.deltaTime;
+
+            Vector3 targetPos = rb.position + climbMove;
+            rb.MovePosition(targetPos);
+        }
+
+        void ResetMove()
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
         private bool CheckLadderRay(float height, out RaycastHit hit)
         {
             Vector3 origin = transform.position + Vector3.up * height;
