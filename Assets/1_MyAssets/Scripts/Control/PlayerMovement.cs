@@ -130,20 +130,36 @@ namespace Raccoon.Player
             if (ladderInRange)
             {
                 Debug.DrawRay(hit.point, hit.normal * 2, Color.red);
-                float approachDot = Vector3.Dot(moveDir.normalized, -hit.normal);
-
-                if (approachDot > 0.3f)
+                if (isGrounded)
                 {
-                    // moveDir đang hướng VÀO thang -> cho leo
-                    StartClimbing(hit);
+                    float approachDot = Vector3.Dot(moveDir.normalized, -hit.normal);
+
+                    if (approachDot > 0.3f)
+                    {
+                        climbing = true;
+                    
+                    }
+                    else
+                    {
+                        climbing = false;
+                    }
                 }
                 else
                 {
-                    //climbing = false;
-                    // moveDir hướng RA XA hoặc đi ngang qua thang -> đi bộ bình thường, không leo
-
+                    climbing = true;
                 }
+
             }
+            else
+            {
+                climbing = false;
+            }
+            if (climbing)
+            {
+                StartClimbing(hit);
+            }
+
+
         }
 
         private Vector3 currentLadderNormal;
@@ -151,7 +167,7 @@ namespace Raccoon.Player
 
         private void StartClimbing(RaycastHit ladderHit)
         {
-            climbing = true;
+            
 
             currentLadderNormal = ladderHit.normal;
             currentLadderRight = Vector3.Cross(Vector3.up, currentLadderNormal).normalized;
