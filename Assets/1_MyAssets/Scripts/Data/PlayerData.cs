@@ -231,7 +231,10 @@ namespace Raccoon
             List<string> listCheckPoint = GetCheckPointInMap(idMap);
             if(listCheckPoint != null)
             {
-                listCheckPoint.Add(idCheckPoint);
+                if (!listCheckPoint.Contains(idCheckPoint))
+                {
+                    listCheckPoint.Add(idCheckPoint);
+                }
             }
         }
         public CharacterData GetCharacterData(string id)

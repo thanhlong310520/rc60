@@ -18,7 +18,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private List<Checkpoint> checkpoints = new List<Checkpoint>();
 
     [SerializeField] private Transform startPoint;
-
+    public IntroCameraController introCameraController;
     // Bắn ra ngoài để các hệ thống khác (SaveManager, GameManager,...) lắng nghe
     public event Action<string> OnSaveCheckpoint;
     public event Action OnWinGame;
@@ -29,6 +29,7 @@ public class MapController : MonoBehaviour
         {
             checkpoints = GetComponentsInChildren<Checkpoint>(true).ToList();
         }
+
     }
 
     /// <summary>
@@ -52,6 +53,7 @@ public class MapController : MonoBehaviour
         {
             c.Init(this);
         }
+        introCameraController.PlayIntroNow(PlayerController.instance.transform);
         OnSaveCheckpoint += actionSaveCheckPoint;
         OnWinGame += actionWinGame;
     }
@@ -92,6 +94,10 @@ public class MapController : MonoBehaviour
         }
 
         OnPlayerHitCheckpoint(cp);
+    }
+    public void EndIntro()
+    {
+        GamePlayController.instance.DoneIntro();
     }
 
     private void SaveCheckpointData(string id)

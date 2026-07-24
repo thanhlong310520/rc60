@@ -33,7 +33,9 @@ public class LoadingScene : MonoBehaviour
         var wait = new WaitForEndOfFrame();
         yield return wait;
         
-        string sceneLoading = "GamePlay";
+        string sceneLoading = "Home";
+        string currentScene = "StartScene";
+
         // if(RuntimeStorageData.Player.HasInGame)
         //     sceneLoading = "Home";
         
@@ -48,7 +50,7 @@ public class LoadingScene : MonoBehaviour
             var progress = timeLoad / delayLoad;
             sliderLoading.value = progress;
             yield return wait;
-
+            multi_speed = 15;
             //if (GameAds.Get != null && GameAds.Get.IsInterstitialOpenShowed)
             //    multi_speed = 15f;
         }
@@ -73,7 +75,7 @@ public class LoadingScene : MonoBehaviour
         var gamePlayScene = SceneManager.GetSceneByName(sceneLoading);
         if (gamePlayScene.IsValid())
             SceneManager.SetActiveScene(gamePlayScene);
-        SceneManager.UnloadSceneAsync("Loading");
+        SceneManager.UnloadSceneAsync(currentScene);
     }
     
     private IEnumerator WaitInterOpenAd()

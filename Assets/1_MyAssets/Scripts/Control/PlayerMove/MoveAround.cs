@@ -23,7 +23,7 @@ public class MoveAround
         moveDir.Normalize();
         if (isRunning)
         {
-            speed += multiSpeedRun / 10f;
+            speed += multiSpeedRun;
         }
 
         return moveDir * climbSpeed * speed;

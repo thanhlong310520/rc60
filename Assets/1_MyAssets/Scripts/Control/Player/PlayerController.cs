@@ -46,7 +46,7 @@ namespace Raccoon.Controller
         private void Start()
         {
             movement.Init(rb, capsule);
-            Init();
+            //Init();
         }
 
         private void OnEnable()

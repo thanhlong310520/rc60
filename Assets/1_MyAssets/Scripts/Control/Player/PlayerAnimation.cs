@@ -87,8 +87,11 @@ namespace Raccoon.Player
 
             if (playerMovement != null)
             {
+                float speed = 1;
+                if (playerMovement.IsRunning) speed += playerMovement.MultiSpeedRun * 0.1f;
+
                 // 1 + multiSpeedRun để Animator có thể dùng làm hệ số tăng tốc clip chạy (Animator.speed hoặc blend)
-                animator.SetFloat(HashSpeedMultiplier, 1f + playerMovement.MultiSpeedRun);
+                animator.SetFloat(HashSpeedMultiplier, speed);
             }
         }
 

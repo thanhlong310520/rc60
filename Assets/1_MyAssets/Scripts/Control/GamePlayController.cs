@@ -26,6 +26,8 @@ public class GamePlayController : MonoBehaviour
         }
     }
     #endregion
+    public Transform holderMap;
+
     [Header("Id map sẽ load khi vào game")]
     [Tooltip("Nếu để trống, sẽ lấy từ PlayerPrefs key 'SelectedMapId'")]
     [SerializeField] private string currentMapId;
@@ -46,6 +48,7 @@ public class GamePlayController : MonoBehaviour
         canShowPopup = true;
         if (SpawnMap(mapdata))
         {
+            CameraController.instance.gameObject.SetActive(false);
             var startPoint = GetStartPoint();
             if(startPoint == null)
             {
@@ -71,6 +74,12 @@ public class GamePlayController : MonoBehaviour
 
     }
 
+    public void DoneIntro()
+    {
+        CameraController.instance.gameObject.SetActive(true);
+        PlayerController.instance.Init();
+    }
+
     /// <summary>
     /// Tìm MapData theo id và spawn prefab tương ứng vào scene.
     /// </summary>
@@ -90,7 +99,7 @@ public class GamePlayController : MonoBehaviour
             return false;
         }
 
-        currentMapInstance = Instantiate(data.mapPrefab, Vector3.zero, Quaternion.identity);
+        currentMapInstance = Instantiate(data.mapPrefab, Vector3.zero, Quaternion.identity, holderMap);
         currentMapController = currentMapInstance.GetComponent<MapController>();
 
         if (currentMapController == null)
@@ -161,6 +170,7 @@ public class GamePlayController : MonoBehaviour
     void WinGame()
     {
         Debug.Log("[GamePlayController] Win");
+        SceneLoader.Instance.LoadScene("Home");
     }
 
     bool canShowPopup = false;

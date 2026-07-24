@@ -70,16 +70,16 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName, Action onCompleted)
     {
-        yield return LoadSceneInternal(SceneManager.LoadSceneAsync(sceneName), sceneName, onCompleted);
+        yield return LoadSceneInternal(sceneName, onCompleted);
     }
 
     private IEnumerator LoadSceneRoutine(int sceneBuildIndex, Action onCompleted)
     {
         string sceneName = SceneManager.GetSceneByBuildIndex(sceneBuildIndex).name;
-        yield return LoadSceneInternal(SceneManager.LoadSceneAsync(sceneBuildIndex), sceneName, onCompleted);
+        yield return LoadSceneInternal(sceneName, onCompleted);
     }
 
-    private IEnumerator LoadSceneInternal(AsyncOperation operation, string sceneName, Action onCompleted)
+    private IEnumerator LoadSceneInternal(string sceneName, Action onCompleted)
     {
         IsLoading = true;
         OnLoadStarted?.Invoke();
@@ -87,9 +87,10 @@ public class SceneLoader : MonoBehaviour
         // Nếu có loading scene riêng, hiện nó trước
         if (!string.IsNullOrEmpty(loadingSceneName))
         {
-            yield return SceneManager.LoadSceneAsync(loadingSceneName, LoadSceneMode.Additive);
+            Debug.Log("Load scene default ");
+            yield return SceneManager.LoadSceneAsync(loadingSceneName, LoadSceneMode.Single);
         }
-
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         operation.allowSceneActivation = false;
 
         // Unity chỉ load tới 90% rồi dừng lại chờ allowSceneActivation = true
@@ -101,6 +102,7 @@ public class SceneLoader : MonoBehaviour
 
         OnLoadProgress?.Invoke(1f);
 
+        yield return null;
         if (autoActivate)
         {
             operation.allowSceneActivation = true;

@@ -1,9 +1,7 @@
 using Raccoon.InputCtr;
 using System.Collections;
-using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.Serialization;
 
 namespace Raccoon.Player
@@ -11,7 +9,7 @@ namespace Raccoon.Player
 
     public class PlayerMovement : MonoBehaviour
     {
-        float multiSpeedRun = 0f;
+        public float multiSpeedRun = 1f;
         public float MultiSpeedRun => multiSpeedRun;
         public float moveSpeed = 1f;
 
@@ -30,6 +28,12 @@ namespace Raccoon.Player
 
         [FormerlySerializedAs("m_GroundCheckDistance")]
         public float groundCheckDistance = 0.1f;
+        [Tooltip("Góc dốc tối đa (độ) được tính là mặt đất đi được. Lớn hơn góc này coi như tường, không tính grounded.")]
+        public float maxSlopeAngle = 55f;
+        [Tooltip("Bán kính SphereCast dùng để check ground = capsuleRadius * hệ số này (nên < 1 để tránh quẹt tường sát bên).")]
+        [Range(0.1f, 1f)] public float groundCheckRadiusMultiplier = 0.9f;
+        private Vector3 groundNormal = Vector3.up;
+        public Vector3 GroundNormal => groundNormal;
         [FormerlySerializedAs("m_ClimbSpeed")]
         public float climbSpeed = 1f;
         public float capsuleRadius = 1;
@@ -57,7 +61,7 @@ namespace Raccoon.Player
         Vector3 dirForward;
         Vector3 dirRight;
         bool isMoving;
-
+        public bool IsRunning;
 
         float turnAmount;
         float forwardAmount;
@@ -67,10 +71,10 @@ namespace Raccoon.Player
 
         float origGroundCheckDistance;
 
-        [SerializeField]public UnityEvent<float, float, bool> actionAnimMove;
-        [SerializeField]public UnityEvent jumpedAction;
-        [SerializeField]public UnityEvent jumpAction;
-        [SerializeField]public UnityEvent<float, float> climbAction;
+        [SerializeField] public UnityEvent<float, float, bool> actionAnimMove;
+        [SerializeField] public UnityEvent jumpedAction;
+        [SerializeField] public UnityEvent jumpAction;
+        [SerializeField] public UnityEvent<float, float> climbAction;
 
         public bool canMove = true;
 
@@ -118,6 +122,7 @@ namespace Raccoon.Player
         public void SetInput(PlayerInput input)
         {
             this.input = input;
+            IsRunning = input.isRunning;
 
         }
         public void SetDirFoward(Vector3 dirForward)
@@ -131,6 +136,17 @@ namespace Raccoon.Player
         private void Update()
         {
             actionAnimMove?.Invoke(forwardAmount, turnAmount, isGrounded);
+            if (!canMove)
+            {
+                ResetMove();
+                input.Reset();
+                return;
+            }
+
+            CheckGroundStatus();
+            CalculateMoveDir();
+            CheckClimb();
+
         }
         private void FixedUpdate()
         {
@@ -140,12 +156,7 @@ namespace Raccoon.Player
                 input.Reset();
                 return;
             }
-            
-            CheckGroundStatus();
-            CalculateMoveDir();
-
             if (isMantling) return; // đang trèo lên đỉnh thì không xử lý input khác
-            CheckClimb();
 
             if (climbing)
             {
@@ -205,7 +216,7 @@ namespace Raccoon.Player
         private void StartClimbing(RaycastHit ladderHit)
         {
 
-
+            if (currentPlatformRb == null) currentPlatformRb = ladderHit.rigidbody;
             currentLadderNormal = ladderHit.normal;
             currentLadderRight = Vector3.Cross(Vector3.up, currentLadderNormal).normalized;
 
@@ -319,7 +330,19 @@ namespace Raccoon.Player
             CheckIsMove();
             CalculateForwardAroundAndTurnAround(moveDir);
 
-            moveAround.Move(rb, isMoving, moveDir, moveSpeed, multiSpeedRun, input.isRunning);
+            // Khi đang đứng trên mặt dốc, chiếu hướng di chuyển lên mặt phẳng dốc (theo groundNormal)
+            // thay vì giữ nguyên vector di chuyển nằm ngang. Nếu không làm vậy, trên dốc nghiêng,
+            // vector di chuyển ngang sẽ "đâm" vào mặt dốc, khiến va chạm liên tục đẩy player
+            // lên/xuống -> đi giật, nảy nhẹ hoặc mất grounded ngay khi vừa bắt đầu leo dốc.
+            Vector3 slopeAdjustedMoveDir = moveDir;
+            if (isGrounded && moveDir.sqrMagnitude > 0.0001f)
+            {
+                Vector3 projected = Vector3.ProjectOnPlane(moveDir, groundNormal);
+                if (projected.sqrMagnitude > 0.0001f)
+                    slopeAdjustedMoveDir = projected.normalized * moveDir.magnitude;
+            }
+
+            moveAround.Move(rb, isMoving, slopeAdjustedMoveDir, moveSpeed, multiSpeedRun, input.isRunning);
             ApplyMovingPlatform();
             Jump();
             ApplyExtraTurnRotation();
@@ -399,6 +422,29 @@ namespace Raccoon.Player
         }
         protected virtual bool GroundCheck(out RaycastHit hit)
         {
+            // ---- 1) SphereCast chính: bắt được cả mặt dốc/nghiêng, không chỉ raycast thẳng đứng ----
+            // Xuất phát cao hơn 1 chút (bù capsuleRadius) để sphere không kẹt bên trong dốc ngay từ đầu,
+            // rồi quét xuống 1 khoảng đủ dài để phủ cả phần offset đó.
+            float startHeight = capsuleRadius + 0.05f;
+            Vector3 sphereOrigin = transform.position + Vector3.up * startHeight * transform.lossyScale.y;
+            float sphereRadius = capsuleRadius * groundCheckRadiusMultiplier;
+            float castDistance = startHeight + groundCheckDistance;
+
+#if UNITY_EDITOR
+            Debug.DrawLine(sphereOrigin, sphereOrigin + Vector3.down * castDistance, Color.green);
+#endif
+            if (Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out hit, castDistance, layerCheckGround))
+            {
+                float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+                if (slopeAngle <= maxSlopeAngle)
+                {
+                    groundNormal = hit.normal;
+                    return true;
+                }
+                // Dốc quá gắt (coi như tường) -> không tính là ground, rơi xuống fallback/return false bên dưới
+            }
+
+            // ---- 2) Fallback: raycast 5 điểm cũ, hữu ích cho mép bàn/step nhỏ mà SphereCast có thể bỏ sót ----
             // 0.1f is a small offset to start the ray from inside the character
             // it is also good to note that the transform position in the sample assets is at the base of the character
             Vector3 pos = transform.position + (Vector3.up * 0.1f * transform.lossyScale.y);
@@ -408,6 +454,7 @@ namespace Raccoon.Player
 #endif
             if (Physics.Raycast(pos, Vector3.down, out hit, groundCheckDistance, layerCheckGround))
             {
+                groundNormal = hit.normal;
                 return true;
             }
             pos.x += capsuleRadius;
@@ -417,29 +464,42 @@ namespace Raccoon.Player
             Debug.DrawLine(pos, pos + (Vector3.down * groundCheckDistance), Color.yellow);
 #endif
             if (Physics.Raycast(pos, Vector3.down, out hit, groundCheckDistance, layerCheckGround))
+            {
+                groundNormal = hit.normal;
                 return true;
+            }
             pos.z -= capsuleRadius * 2f;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
             Debug.DrawLine(pos, pos + (Vector3.down * groundCheckDistance), Color.yellow);
 #endif
             if (Physics.Raycast(pos, Vector3.down, out hit, groundCheckDistance, layerCheckGround))
+            {
+                groundNormal = hit.normal;
                 return true;
+            }
             pos.x -= capsuleRadius * 2f;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
             Debug.DrawLine(pos, pos + (Vector3.down * groundCheckDistance), Color.yellow);
 #endif
             if (Physics.Raycast(pos, Vector3.down, out hit, groundCheckDistance, layerCheckGround))
+            {
+                groundNormal = hit.normal;
                 return true;
+            }
             pos.z += capsuleRadius * 2f;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
             Debug.DrawLine(pos, pos + (Vector3.down * groundCheckDistance), Color.yellow);
 #endif
             if (Physics.Raycast(pos, Vector3.down, out hit, groundCheckDistance, layerCheckGround))
+            {
+                groundNormal = hit.normal;
                 return true;
+            }
 
+            groundNormal = Vector3.up;
             return false;
         }
 
@@ -461,9 +521,10 @@ namespace Raccoon.Player
         {
             if (input.isJump)
             {
-                jumpHandle.Jump(rb, jumpPower, ActionJump);
+                jumpHandle.Jump(rb, isGrounded, jumpPower, ActionJump);
+                isGrounded = false;
             }
-            if (isGrounded) jumpHandle.ResetJump();
+            if (isGrounded && rb.linearVelocity.y < 0) jumpHandle.ResetJump();
             input.isJump = false;
         }
 
