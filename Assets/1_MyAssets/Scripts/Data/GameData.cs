@@ -38,9 +38,31 @@ namespace Raccoon
         {
             isShowVip = false;
             //if (PlayerData.Get.onMusic) PlayBgMusic();
-
             //ObserverEventManager.Instance.Subscribe<SoundType>(EventObserverName.PlaySfx.ToString(),PlaySFX);
             CheckSubscribe();
+            GetCurrentMap();
+        }
+
+        void GetCurrentMap()
+        {
+            string mapId = PlayerData.Get.currentMap;
+            Debug.Log("[GameData]  mapid = " + mapId);
+
+            currentMap = mapDataList.FirstOrDefault(c => c.mapId == mapId);
+            if(currentMap == null)
+            {
+                Debug.Log("[GameData] current map = null");
+                SetCurrentMap(mapDataList[0]);
+            }
+            Debug.Log("[GameData] list map " + PlayerData.Get.listDataMap.Count);
+            
+        }
+
+        public void SetCurrentMap(MapData newmap)
+        {
+            if (newmap == null) return;
+            currentMap = newmap;
+            PlayerData.Get.SetCurrentMap(currentMap.mapId);
         }
         public void CheckSubscribe()
         {
@@ -76,14 +98,39 @@ namespace Raccoon
             //}
         }
 
-        public CharacterData GetCharacterData(string id)
+        //public CharacterData GetCharacterData(string id)
+        //{
+        //    CharacterData result = PlayerData.Get.GetCharacterData(id);
+        //    return result;  
+        //}
+        public bool SaveCheckPoint(string idMap, string idCheckPoin)
         {
-            CharacterData result = PlayerData.Get.GetCharacterData(id);
-            return result;  
+            return PlayerData.Get.SaveCheckPoint(idMap, idCheckPoin);  
         }
-        public void SaveCheckPoint(string idMap, string idCheckPoin)
+
+        public void SetWinMap(string idMap)
         {
-            PlayerData.Get.SaveCheckPoint(idMap, idCheckPoin);  
+            DataMap dt = PlayerData.Get.GetDataMap(idMap);
+            dt.WinMap();
+        }
+
+        public void ResetMap(string idMap)
+        {
+            Debug.Log("[GameData] reset map " + idMap);
+
+            DataMap dt = PlayerData.Get.GetDataMap(idMap);
+            dt.Reset();
+        }
+
+        public DataMap GetDataMap(string idMap)
+        {
+            return PlayerData.Get.GetDataMap(idMap);
+        }
+
+        public bool GetWinMap(string idMap)
+        {
+            var dataMap = PlayerData.Get.GetDataMap(idMap);
+            return dataMap != null && dataMap.won;
         }
         #region Audio
         public void ChangeOnSound(UnityAction<bool> actionChange)

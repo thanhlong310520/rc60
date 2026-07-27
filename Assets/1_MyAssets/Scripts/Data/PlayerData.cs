@@ -19,9 +19,10 @@ namespace Raccoon
         public bool isOnAds = true;
         public string filename;
         public string version;
+        public string currentMap;
         public List<CharacterData> charactorDatas;
         public List<string> actionTutDone;
-        public Dictionary<string, List<string>> listCheckPointInMap;
+        public Dictionary<string, DataMap> listDataMap;
         public bool isVipIAP;
 
         public PlayerData() { }
@@ -34,6 +35,7 @@ namespace Raccoon
             onSound = true;
             isOnAds = true;
             isVipIAP = false;
+            currentMap = "";
         }
         public List<CharacterData> GetCharacterDatas() => charactorDatas;
 
@@ -41,7 +43,7 @@ namespace Raccoon
         {
             charactorDatas ??= new List<CharacterData>();
             actionTutDone ??= new List<string>();
-            listCheckPointInMap ??= new Dictionary<string, List<string>>();
+            listDataMap ??= new Dictionary<string,DataMap>();
         }
 
         #region SAVE / LOAD
@@ -191,51 +193,55 @@ namespace Raccoon
         }
         #endregion
 
-        public List<string> GetCheckPointInMap(string idMap)
+        public void SetCurrentMap(string cm)
         {
-            List<string> result = new List<string>();
+            Get.currentMap = cm;
+        }
+        public DataMap GetDataMap(string idMap)
+        {
+            DataMap result = null;
             if(string.IsNullOrEmpty(idMap)) return null;
-            if (listCheckPointInMap.ContainsKey(idMap))
+            if (Get.listDataMap.ContainsKey(idMap))
             {
-                if(listCheckPointInMap[idMap] == null)
+                if(Get.listDataMap[idMap] == null)
                 {
-                    listCheckPointInMap[idMap] = result;
+                    result = new DataMap(idMap);
+                    Get.listDataMap[idMap] = result;
                 }
                 else
                 {
-                    result = listCheckPointInMap[idMap];
+                    result = Get.listDataMap[idMap];
                 }
             }
             else
             {
-                listCheckPointInMap.Add(idMap, result);
+                result = new DataMap(idMap);
+                Get.listDataMap.Add(idMap, result);
             }
-
             return result;
+
         }
 
         public string GetLastCheckPointInMap(string idMap)
         {
             string result = "";
-            List<string> listCheckPoint = GetCheckPointInMap(idMap);
-            if(listCheckPoint != null && listCheckPoint.Count > 0)
+            DataMap dataM = GetDataMap(idMap);
+            if(dataM != null && dataM.listCheckPoint.Count > 0)
             {
-                result = listCheckPoint[listCheckPoint.Count - 1];
+                result = dataM.listCheckPoint[dataM.listCheckPoint.Count - 1];
             }
 
             return result;
         }
 
-        public void SaveCheckPoint(string idMap, string idCheckPoint)
+        public bool SaveCheckPoint(string idMap, string idCheckPoint)
         {
-            List<string> listCheckPoint = GetCheckPointInMap(idMap);
-            if(listCheckPoint != null)
+            DataMap dM = GetDataMap(idMap);
+            if(dM != null)
             {
-                if (!listCheckPoint.Contains(idCheckPoint))
-                {
-                    listCheckPoint.Add(idCheckPoint);
-                }
+                return dM.AddCheckPoint(idCheckPoint);
             }
+            return false;
         }
         public CharacterData GetCharacterData(string id)
         {

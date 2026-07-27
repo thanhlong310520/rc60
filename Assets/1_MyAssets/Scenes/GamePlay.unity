@@ -1382,6 +1382,7 @@ MonoBehaviour:
   canMove: 1
   rotateWithPlatform: 1
   followPlatformVerticalMotion: 0
+  FallTimeout: 0.15
 --- !u!1 &1016362750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopupDead
   IsActive: 0
-  popup: 1
+  popup: 2
   popupAnimation: 2
   panel: {fileID: 1256079778}
   hideWhenShowOtherPopup: 1

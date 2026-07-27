@@ -32,6 +32,7 @@ namespace Raccoon.Player
         private static readonly int HashForward = Animator.StringToHash("Forward");
         private static readonly int HashTurn = Animator.StringToHash("Turn");
         private static readonly int HashGrounded = Animator.StringToHash("IsGrounded");
+        private static readonly int IsFalling = Animator.StringToHash("IsFalling");
         private static readonly int HashJump = Animator.StringToHash("Jump");
         private static readonly int HashClimbing = Animator.StringToHash("IsClimb");
         private static readonly int HashMantling = Animator.StringToHash("Mantling");
@@ -77,13 +78,14 @@ namespace Raccoon.Player
         /// <summary>
         /// Gọi từ UnityEvent actionAnimMove(forwardAmount, turnAmount, isGrounded) của PlayerMovement.
         /// </summary>
-        public void OnAnimMove(float forwardAmount, float turnAmount, bool isGrounded)
+        public void OnAnimMove(float forwardAmount, float turnAmount, bool isGrounded, bool isFalling)
         {
             if (animator == null) return;
 
             animator.SetFloat(HashForward, forwardAmount, moveDampTime, Time.deltaTime);
             animator.SetFloat(HashTurn, turnAmount, moveDampTime, Time.deltaTime);
             animator.SetBool(HashGrounded, isGrounded);
+            animator.SetBool(IsFalling, isFalling);
 
             if (playerMovement != null)
             {

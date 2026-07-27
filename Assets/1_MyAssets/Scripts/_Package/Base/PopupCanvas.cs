@@ -147,6 +147,7 @@ public class PopupCanvas : MonoBehaviour
     public enum PopupType
     {
         Setting,
+        Play,
         Dead,
         VipSub,
         RemoveAds

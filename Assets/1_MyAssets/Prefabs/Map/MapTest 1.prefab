@@ -483,6 +483,7 @@ MonoBehaviour:
   - {fileID: 1510861607458446421}
   - {fileID: 636856630492500032}
   startPoint: {fileID: 5948031716592591141}
+  introCameraController: {fileID: 0}
 --- !u!1 &5720829788967684583
 GameObject:
   m_ObjectHideFlags: 0

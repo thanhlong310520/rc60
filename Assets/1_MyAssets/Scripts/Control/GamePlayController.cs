@@ -111,7 +111,7 @@ public class GamePlayController : MonoBehaviour
 
         currentMapId = data.mapId;
 
-        currentMapController.Init(SaveCheckPoint, WinGame);
+        currentMapController.Init();
         Debug.Log($"[GamePlayController] Đã spawn map: {data.mapId}");
         return true;
     }
@@ -161,16 +161,17 @@ public class GamePlayController : MonoBehaviour
         this.canAction = canAction;
     }
 
-    void SaveCheckPoint(string idCheckpoint)
+    public bool SaveCheckPoint(string idCheckpoint)
     {
         Debug.Log("[GamePlayController] Save check point");
 
-        GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
+        return GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
     }
-    void WinGame()
+    public void WinGame()
     {
         Debug.Log("[GamePlayController] Win");
-        SceneLoader.Instance.LoadScene("Home");
+        //GameData.Get.SetWinMap(currentMapId);   
+        //SceneLoader.Instance.LoadScene("Home");
     }
 
     bool canShowPopup = false;

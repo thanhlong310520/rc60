@@ -19,9 +19,7 @@ public class MapController : MonoBehaviour
 
     [SerializeField] private Transform startPoint;
     public IntroCameraController introCameraController;
-    // Bắn ra ngoài để các hệ thống khác (SaveManager, GameManager,...) lắng nghe
-    public event Action<string> OnSaveCheckpoint;
-    public event Action OnWinGame;
+
 
     private void Awake()
     {
@@ -47,21 +45,15 @@ public class MapController : MonoBehaviour
         return null;
     }
 
-    public void Init(Action<string> actionSaveCheckPoint, Action actionWinGame)
+    public void Init()
     {
         foreach (var c in checkpoints)
         {
             c.Init(this);
         }
         introCameraController.PlayIntroNow(PlayerController.instance.transform);
-        OnSaveCheckpoint += actionSaveCheckPoint;
-        OnWinGame += actionWinGame;
     }
 
-    private void OnDisable()
-    {
-        OnSaveCheckpoint = null; OnWinGame = null;
-    }
 
     /// <summary>
     /// Gọi khi player va chạm 1 checkpoint (được Checkpoint tự gọi qua OnTriggerEnter).
@@ -69,15 +61,7 @@ public class MapController : MonoBehaviour
     public void OnPlayerHitCheckpoint(Checkpoint checkpoint)
     {
         if (checkpoint == null) return;
-
-        if (checkpoint.isEndPoint)
-        {
-            WinGame();
-        }
-        else
-        {
-            SaveCheckpointData(checkpoint.id);
-        }
+        SaveCheckpointData(checkpoint);
     }
 
     /// <summary>
@@ -100,17 +84,26 @@ public class MapController : MonoBehaviour
         GamePlayController.instance.DoneIntro();
     }
 
-    private void SaveCheckpointData(string id)
+    private void SaveCheckpointData(Checkpoint checkpoint)
     {
         // TODO: thay bằng hệ thống save thật của bạn (JSON, PlayerPrefs, SaveManager,...)
-        
-        Debug.Log($"[MapController] Đã lưu checkpoint: {id}");
-        OnSaveCheckpoint?.Invoke(id);
+        if (GamePlayController.instance.SaveCheckPoint(checkpoint.id))
+        {
+                Debug.Log($"[MapController] Đã lưu checkpoint: {checkpoint.id}");
+            if (checkpoint.isEndPoint)
+            {
+                WinGame();
+            }
+        }
+        else
+        {
+            Debug.Log($"[MapController] have checkpoint");
+        }
     }
 
     private void WinGame()
     {
         Debug.Log("[MapController] Win game!");
-        OnWinGame?.Invoke();
+        GamePlayController.instance.WinGame();
     }
 }

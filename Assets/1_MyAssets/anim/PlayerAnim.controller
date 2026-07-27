@@ -211,6 +211,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: IsClimb
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsFalling
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6664347291273785416}
   m_Solo: 0
@@ -328,6 +331,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: SpeedClimb
     m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: IsFalling
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -468,7 +477,7 @@ AnimatorStateMachine:
     m_Position: {x: 130, y: -290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6664347291273785416}
-    m_Position: {x: 260, y: -150, z: 0}
+    m_Position: {x: 300, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 673053167920846957}
     m_Position: {x: 550, y: -380, z: 0}
@@ -502,6 +511,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Mantling
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsFalling
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6664347291273785416}

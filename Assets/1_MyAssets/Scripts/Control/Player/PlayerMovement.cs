@@ -1,8 +1,10 @@
 using Raccoon.InputCtr;
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.Windows;
 
 namespace Raccoon.Player
 {
@@ -71,7 +73,7 @@ namespace Raccoon.Player
 
         float origGroundCheckDistance;
 
-        [SerializeField] public UnityEvent<float, float, bool> actionAnimMove;
+        [SerializeField] public UnityEvent<float, float, bool,bool> actionAnimMove;
         [SerializeField] public UnityEvent jumpedAction;
         [SerializeField] public UnityEvent jumpAction;
         [SerializeField] public UnityEvent<float, float> climbAction;
@@ -135,7 +137,7 @@ namespace Raccoon.Player
         }
         private void Update()
         {
-            actionAnimMove?.Invoke(forwardAmount, turnAmount, isGrounded);
+            actionAnimMove?.Invoke(forwardAmount, turnAmount, isGrounded, isFalling);
             if (!canMove)
             {
                 ResetMove();
@@ -168,6 +170,7 @@ namespace Raccoon.Player
             {
                 FixedUpdateImpl();
             }
+            CheckFalling();
         }
 
         #region Climb
@@ -367,7 +370,7 @@ namespace Raccoon.Player
             {
                 // Chỉ lấy tốc độ xoay quanh trục Y để tránh player bị nghiêng theo platform
                 float yawRateRad = Vector3.Dot(currentPlatformRb.angularVelocity, Vector3.up);
-                float yawDegrees = yawRateRad * Mathf.Rad2Deg * Time.fixedDeltaTime;
+                float yawDegrees = yawRateRad * Mathf.Rad2Deg * Time.deltaTime;
                 if (!Mathf.Approximately(yawDegrees, 0f))
                     transform.Rotate(Vector3.up, yawDegrees, Space.World);
             }
@@ -511,10 +514,13 @@ namespace Raccoon.Player
 
         void UplineGravityInAir()
         {
-            if (isGrounded) return;
+            if (isGrounded)
+            {
+                rb.linearVelocity += Vector3.up * (-9.8f) * Time.deltaTime;
+                return;
+            }
 
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.fixedDeltaTime;
-
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.deltaTime;
             groundCheckDistance = rb.linearVelocity.y < 0 ? origGroundCheckDistance : 0.1f;
         }
         void Jump()
@@ -535,6 +541,33 @@ namespace Raccoon.Player
             jumpAction?.Invoke();
         }
 
+        [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+        public float FallTimeout = 0.15f;
+        // timeout deltatime
+        private float _fallTimeoutDelta;
+        bool isFalling;
+        void CheckFalling()
+        {
+            if (isGrounded || climbing || isMantling)
+            {
+                // reset the fall timeout timer
+                _fallTimeoutDelta = FallTimeout;
+                isFalling = false;
+            }
+            else
+            {
+
+                // fall timeout
+                if (_fallTimeoutDelta >= 0.0f)
+                {
+                    _fallTimeoutDelta -= Time.deltaTime;
+                }
+                else
+                {
+                    isFalling = true;
+                }
+            }
+        }
 
     }
 }

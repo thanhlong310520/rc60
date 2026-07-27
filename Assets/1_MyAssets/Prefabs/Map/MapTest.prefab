@@ -218,7 +218,7 @@ MonoBehaviour:
   offsetEndPoint: {x: 0, y: 2, z: 5}
   player: {fileID: 1078256512059953662}
   offsetPlayer: {x: 0, y: 2, z: 4}
-  riseHeight: 100
+  riseHeight: 50
   riseDuration: 5
   orbitCount: 2
   orbitDuration: 10
