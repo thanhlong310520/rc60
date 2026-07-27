@@ -37,4 +37,9 @@ namespace Raccoon.EnumHolder
         Button, ContactSlot, CollectCoin, ContactWave, BaseBatAttack, SaveLoot, UpgradeSuccess, LootItem, FootStep, ChangeMap,
         Jump, MapSound, Steal, BuyFall, Shield, ChangeMap1,
     }
+
+    public enum TypeSkin
+    {
+        Face, Hair, Shirt, Trouser, Shoes, Bag
+    }
 }

@@ -20,7 +20,7 @@ namespace Raccoon
         public string filename;
         public string version;
         public string currentMap;
-        public List<CharacterData> charactorDatas;
+        public CharacterData characterData;
         public List<string> actionTutDone;
         public Dictionary<string, DataMap> listDataMap;
         public bool isVipIAP;
@@ -36,12 +36,12 @@ namespace Raccoon
             isOnAds = true;
             isVipIAP = false;
             currentMap = "";
+            characterData ??= new CharacterData("Player", "Player");
         }
-        public List<CharacterData> GetCharacterDatas() => charactorDatas;
 
         public void FixData()
         {
-            charactorDatas ??= new List<CharacterData>();
+            characterData ??= new CharacterData("Player", "Player");
             actionTutDone ??= new List<string>();
             listDataMap ??= new Dictionary<string,DataMap>();
         }
@@ -197,6 +197,14 @@ namespace Raccoon
         {
             Get.currentMap = cm;
         }
+        public CharacterData GetCharacterData()
+        {
+            if(characterData == null)
+            {
+                characterData = new CharacterData("Player", "Player");
+            }
+            return characterData;
+        }
         public DataMap GetDataMap(string idMap)
         {
             DataMap result = null;
@@ -242,16 +250,6 @@ namespace Raccoon
                 return dM.AddCheckPoint(idCheckPoint);
             }
             return false;
-        }
-        public CharacterData GetCharacterData(string id)
-        {
-            CharacterData result = Get.GetCharacterDatas().FirstOrDefault(c => c.id == id);
-            if (result == null)
-            {
-                result = new CharacterData(id, id);
-                Get.charactorDatas.Add(result);
-            }
-            return result;
         }
 
         public bool HaveActionTutDone(string action)

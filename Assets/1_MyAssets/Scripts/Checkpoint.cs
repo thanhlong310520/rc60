@@ -12,9 +12,17 @@ public class Checkpoint : MonoBehaviour
     [Header("Thông tin checkpoint")]
     public string id;
     public bool isEndPoint; // true nếu là điểm cuối (win game)
+    public Transform pointPlayerStay;
 
     public MapController mapController;
 
+
+    public Transform GetPointPlayerStay()
+    {
+        if (pointPlayerStay != null)
+            return pointPlayerStay;
+        return transform;
+    }
 
     public void Init(MapController mapController)
     {

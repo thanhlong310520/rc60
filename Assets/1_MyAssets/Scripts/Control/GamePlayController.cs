@@ -129,6 +129,15 @@ public class GamePlayController : MonoBehaviour
         PlayerController.instance.ResetPlayer();
     }
 
+    public void SetNextPoint()
+    {
+
+        string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+        var nextPoint = currentMapController.GetNextCheckpointTransform(idCheckpoint);
+        PlayerController.instance.SetStartPoint(nextPoint.transform);
+        PlayerController.instance.ResetPlayer();
+    }
+
     #region UI
     public void ShowPopup(PopupCanvas.PopupType type, CharacterData data = null)
     {

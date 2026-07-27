@@ -149,6 +149,9 @@ public class PopupCanvas : MonoBehaviour
         Setting,
         Play,
         Dead,
+        Shop,
+        DailyReward,
+        Skin,
         VipSub,
         RemoveAds
     }

@@ -191,7 +191,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281222767}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -243,7 +243,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -401,6 +401,7 @@ MonoBehaviour:
   mapDataList:
   - {fileID: 11400000, guid: e4301020963b97d49829658e0ac21c76, type: 2}
   - {fileID: 11400000, guid: 339bdfcc3dabb3e47bc24a945feb1db9, type: 2}
+  listskin: []
   audioBg: []
   listSoundFX: []
   isShowVip: 0
@@ -511,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5205408836680022527, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464444386356523436, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
       propertyPath: m_Sprite

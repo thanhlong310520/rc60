@@ -2550,7 +2550,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &3468435812755622134
 Rigidbody:
@@ -2593,6 +2593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 27
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &153418004347537451 stripped
 GameObject:
@@ -2888,7 +2889,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &2232658373812256224
 Rigidbody:
@@ -2931,6 +2932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 21
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &576970860414317138 stripped
 GameObject:
@@ -3555,7 +3557,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1427281880384025399
 Rigidbody:
@@ -3598,6 +3600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 7
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &1663867415986462053 stripped
 GameObject:
@@ -3893,7 +3896,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &6141205030323359606
 Rigidbody:
@@ -3936,6 +3939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 20
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &1903306621574513829 stripped
 GameObject:
@@ -4150,7 +4154,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &7733097512630197123
 Rigidbody:
@@ -4193,6 +4197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 6
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &2671598197363429887 stripped
 GameObject:
@@ -4466,7 +4471,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &7669548336244919906
 Rigidbody:
@@ -4509,6 +4514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 8
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &3208257995219149121 stripped
 GameObject:
@@ -4723,7 +4729,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &6379787046768769513
 Rigidbody:
@@ -4766,6 +4772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 9
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &3492725774319722110 stripped
 GameObject:
@@ -5250,7 +5257,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &6986012205381062989
 Rigidbody:
@@ -5293,6 +5300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 25
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &4202772998034251665 stripped
 GameObject:
@@ -5372,7 +5380,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &5917267934841495812
 Rigidbody:
@@ -5415,6 +5423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 24
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &4296767669391491837 stripped
 GameObject:
@@ -5575,7 +5584,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1578359146770582720
 Rigidbody:
@@ -5618,6 +5627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 26
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &4529592734982921587 stripped
 GameObject:
@@ -5859,7 +5869,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1362530818170836243
 Rigidbody:
@@ -5902,6 +5912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 5
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &5112565163095118795 stripped
 GameObject:
@@ -6143,7 +6154,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &4537504694399391613
 Rigidbody:
@@ -6186,6 +6197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 10
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &5369797951264004927 stripped
 GameObject:
@@ -6346,7 +6358,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1020240154961858990
 Rigidbody:
@@ -6389,6 +6401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 12
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &5492471004632960636 stripped
 GameObject:
@@ -6603,7 +6616,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &219443653031557438
 Rigidbody:
@@ -6646,6 +6659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 18
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!4 &5769083923169880662 stripped
 Transform:
@@ -6730,7 +6744,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1352438400192800067
 Rigidbody:
@@ -6773,6 +6787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 3
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &6003900991293843269 stripped
 GameObject:
@@ -6879,7 +6894,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &4893490547774668889
 Rigidbody:
@@ -6922,6 +6937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 22
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &6154012207213874649 stripped
 GameObject:
@@ -7082,7 +7098,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7383141679481348008
 Rigidbody:
@@ -7125,6 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 14
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &6302966920559927971 stripped
 GameObject:
@@ -7285,7 +7302,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &8233360131476424800
 Rigidbody:
@@ -7328,6 +7345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 11
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &6667639114858967523 stripped
 GameObject:
@@ -7380,7 +7398,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &5442706484512437270
 Rigidbody:
@@ -7423,6 +7441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 23
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &6699586621784728516 stripped
 GameObject:
@@ -7745,7 +7764,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &1503090234823976334
 Rigidbody:
@@ -7788,6 +7807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 13
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7253531049829183664 stripped
 GameObject:
@@ -7921,7 +7941,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &3866121838866370775
 Rigidbody:
@@ -7964,6 +7984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 15
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7397241122534956422 stripped
 GameObject:
@@ -8070,7 +8091,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &6682192687193790840
 Rigidbody:
@@ -8113,6 +8134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 19
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7451736572218282881 stripped
 GameObject:
@@ -8246,7 +8268,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &6682600111985477296
 Rigidbody:
@@ -8289,6 +8311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 1
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7659493699776056792 stripped
 GameObject:
@@ -8395,7 +8418,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &129705785641865022
 Rigidbody:
@@ -8438,6 +8461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 4
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7815715736030321404 stripped
 GameObject:
@@ -8652,7 +8676,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &2449774825898500601
 Rigidbody:
@@ -8695,6 +8719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 16
   isEndPoint: 1
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &7964675753949337777 stripped
 GameObject:
@@ -9206,7 +9231,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &727911870595210440
 Rigidbody:
@@ -9249,6 +9274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 2
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &8714996120554132448 stripped
 GameObject:
@@ -9382,7 +9408,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: -0.875, y: 0, z: -0.875}
 --- !u!54 &5931354711242970165
 Rigidbody:
@@ -9425,6 +9451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   id: 17
   isEndPoint: 0
+  pointPlayerStay: {fileID: 0}
   mapController: {fileID: 0}
 --- !u!1 &8892310536914285307 stripped
 GameObject:

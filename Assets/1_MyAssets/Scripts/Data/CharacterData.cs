@@ -1,4 +1,5 @@
 using MessagePack;
+using Raccoon.EnumHolder;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,52 +11,25 @@ public class CharacterData
     public string id;
     public string name;
     public long coin;
-    public bool isUnlockGate;
-    public string currentFashion;
-    public CharactorUpgrade upgrade;
-    public Dictionary<string, DataBrainInSlot> dicBotInSlots;
-    public List<string> listBotUnlock;
-    public List<string> listSlotGate2Unlock;
-    public int indexRebirth = -1;
+    public Dictionary<TypeSkin, string> dicCurrentSkin;
+    public Dictionary<TypeSkin, List<string>> dicOwnSkin;
 
 
     [NonSerialized]
     [IgnoreMember]
     public Action<long> onChangeCoin;
 
-
-    public CharactorUpgrade GetUpgrade()
-    {
-        if(upgrade == null) upgrade = new CharactorUpgrade();   
-        return upgrade;
-    }
-
-
-
     public CharacterData(string id, string name)
     {
         this.id = id;
         this.name = name;
         coin = 0;
-        indexRebirth = -1;
-        isUnlockGate = false;
-        upgrade = new CharactorUpgrade();
-        currentFashion = "FashionData_Brain";
-        dicBotInSlots = new Dictionary<string, DataBrainInSlot>();
-        listBotUnlock = new List<string>();
-        listSlotGate2Unlock = new List<string>();
+        dicCurrentSkin = new Dictionary<TypeSkin, string>();
+        dicOwnSkin = new Dictionary<TypeSkin, List<string>>();
     }
-    
-    public bool AddItemUnlock(string id)
+    public void ChangeFashion(TypeSkin type, string id)
     {
-        if(listBotUnlock.Contains(id)) return false;
-        listBotUnlock.Add(id);
-        return true;
-    }
-
-    public void ChangeFashion(string id)
-    {
-        currentFashion = id;
+        dicCurrentSkin[type] = id;
     }
     public void AddCoin(long add)
     {
@@ -63,40 +37,37 @@ public class CharacterData
         onChangeCoin?.Invoke(coin);
     }
 
-    public void SetUnlockGate(bool unLock)
+    public string GetIdCurrentSkin(TypeSkin type)
     {
-        Debug.Log("Data unlock");
-        isUnlockGate = unLock;  
-    }
-    public void UnlockSlotGate2(string id)
+        if (dicCurrentSkin.ContainsKey(type))
+        {
+            return dicCurrentSkin[type];
+        }
+        return null;
+    }   
+
+    public void AddOwnSkin(TypeSkin type, string id)
     {
-        if(listSlotGate2Unlock.Contains(id)) return;
-        listSlotGate2Unlock.Add(id);
+        if (!dicOwnSkin.ContainsKey(type))
+        {
+            dicOwnSkin[type] = new List<string>();
+        }
+        if (!dicOwnSkin[type].Contains(id))
+        {
+            dicOwnSkin[type].Add(id);
+        }
     }
+    public bool IsOwnSkin(TypeSkin type, string id)
+    {
+        if (dicOwnSkin.ContainsKey(type))
+        {
+            return dicOwnSkin[type].Contains(id);
+        }
+        return false;
+    }
+
     public long GetCoin => coin;
 
 
-    public int GetIndexRebirth()
-    {
-        return indexRebirth;
-    }
-    public void UpdateIndexRebirth()
-    {
-        indexRebirth++;
-    }
-
 }
 
-[MessagePackObject(keyAsPropertyName: true)]
-[System.Serializable]
-public class CharactorUpgrade
-{
-    
-}
-
-[MessagePackObject(keyAsPropertyName: true)]
-[System.Serializable]
-public class DataBrainInSlot
-{
-    
-}

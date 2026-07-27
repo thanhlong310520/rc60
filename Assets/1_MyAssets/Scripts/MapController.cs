@@ -39,9 +39,21 @@ public class MapController : MonoBehaviour
         Checkpoint cp = checkpoints.Find(c => c.id == id);
 
         if (cp != null)
-            return cp.transform;
+            return cp.GetPointPlayerStay();
         if (startPoint != null)
             return startPoint;
+        return null;
+    }
+
+    public Transform GetNextCheckpointTransform(string idLastPoint)
+    {
+        int index = checkpoints.FindIndex(c => c.id == idLastPoint);
+        if (index == -1) return checkpoints[0].transform;
+
+        if (index == checkpoints.Count - 1)
+            return checkpoints[checkpoints.Count - 1].GetPointPlayerStay();
+        if (index < checkpoints.Count - 1)
+            return checkpoints[index + 1].GetPointPlayerStay();
         return null;
     }
 

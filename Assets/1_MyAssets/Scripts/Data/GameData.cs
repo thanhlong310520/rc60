@@ -12,6 +12,7 @@ namespace Raccoon
 
         [Header("Danh sách toàn bộ map trong game")]
         [SerializeField] private List<MapData> mapDataList = new List<MapData>();
+        [SerializeField] public List<SoSkin> listskin;
 
 
         public List<AudioClip> audioBg;
@@ -98,11 +99,11 @@ namespace Raccoon
             //}
         }
 
-        //public CharacterData GetCharacterData(string id)
-        //{
-        //    CharacterData result = PlayerData.Get.GetCharacterData(id);
-        //    return result;  
-        //}
+        public CharacterData GetCharacterData()
+        {
+            CharacterData result = PlayerData.Get.GetCharacterData();
+            return result;
+        }
         public bool SaveCheckPoint(string idMap, string idCheckPoin)
         {
             return PlayerData.Get.SaveCheckPoint(idMap, idCheckPoin);  
