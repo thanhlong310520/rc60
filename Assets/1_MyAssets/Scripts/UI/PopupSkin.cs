@@ -54,7 +54,7 @@ public class PopupSkin : PopupCanvas
             dicDataItem[type] = new List<SoSkin>();
         }
 
-        foreach (var data in GameData.Get.listskin)
+        foreach (var data in GameData.Get.listSkinSO)
         {
             dicDataItem[data.typeSkin].Add(data);
         }

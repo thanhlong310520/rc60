@@ -11,6 +11,9 @@ public class CharacterData
     public string id;
     public string name;
     public long coin;
+    public string lastTimeClaimReward;
+    public int dayReward;
+
     public Dictionary<TypeSkin, string> dicCurrentSkin;
     public Dictionary<TypeSkin, List<string>> dicOwnSkin;
 
@@ -24,6 +27,8 @@ public class CharacterData
         this.id = id;
         this.name = name;
         coin = 0;
+        lastTimeClaimReward = "";
+        dayReward = 0;
         dicCurrentSkin = new Dictionary<TypeSkin, string>();
         dicOwnSkin = new Dictionary<TypeSkin, List<string>>();
     }
@@ -68,6 +73,15 @@ public class CharacterData
 
     public long GetCoin => coin;
 
+
+    public void SetLastTimeClaimReward(string time)
+    {
+        lastTimeClaimReward = time;
+    }
+    public void SetDayReward(int day)
+    {
+        dayReward = day;
+    }
 
 }
 

@@ -42,4 +42,9 @@ namespace Raccoon.EnumHolder
     {
         Face, Hair, Shirt, Trouser, Shoes, Bag
     }
+
+    public enum TypeCurrency 
+    {
+        Gold, Gem
+    }
 }

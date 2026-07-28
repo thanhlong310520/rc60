@@ -1,3 +1,4 @@
+using Raccoon.EnumHolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,12 @@ namespace Raccoon
 
         [Header("Danh sách toàn bộ map trong game")]
         [SerializeField] private List<MapData> mapDataList = new List<MapData>();
-        [SerializeField] public List<SoSkin> listskin;
+        [SerializeField] public List<SoSkin> listSkinSO;
+        [SerializeField] public List<SoDailyReward> listDailyRewardSO;
+        [SerializeField] List<UiCurrencyType> listUICurrency;
+
+
+        public DailyRewardTimeChecker dailyRewardTimeChecker = new DailyRewardTimeChecker();
 
 
         public List<AudioClip> audioBg;
@@ -44,27 +50,7 @@ namespace Raccoon
             GetCurrentMap();
         }
 
-        void GetCurrentMap()
-        {
-            string mapId = PlayerData.Get.currentMap;
-            Debug.Log("[GameData]  mapid = " + mapId);
 
-            currentMap = mapDataList.FirstOrDefault(c => c.mapId == mapId);
-            if(currentMap == null)
-            {
-                Debug.Log("[GameData] current map = null");
-                SetCurrentMap(mapDataList[0]);
-            }
-            Debug.Log("[GameData] list map " + PlayerData.Get.listDataMap.Count);
-            
-        }
-
-        public void SetCurrentMap(MapData newmap)
-        {
-            if (newmap == null) return;
-            currentMap = newmap;
-            PlayerData.Get.SetCurrentMap(currentMap.mapId);
-        }
         public void CheckSubscribe()
         {
             //foreach (var sub in GameStoreController.Get.lstProduct)
@@ -103,6 +89,68 @@ namespace Raccoon
         {
             CharacterData result = PlayerData.Get.GetCharacterData();
             return result;
+        }
+        public bool CanClaimReward()
+        {
+            string lastReward = PlayerData.Get.GetCharacterData().lastTimeClaimReward;
+            if (string.IsNullOrEmpty(lastReward)) return true;
+
+            if (dailyRewardTimeChecker.GetElapsedDays(lastReward) >= 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        public int GetDayReward()
+        {
+            int exDay = PlayerData.Get.GetCharacterData().dayReward;
+
+            if (exDay < 0) exDay = 0;
+            if (exDay >= listDailyRewardSO.Count)
+            {
+                if(CanClaimReward()) exDay = 0;
+            }
+            return exDay + 1;
+        }
+
+
+        public void ClaimReward(List<SoDailyReward> listSO)
+        {
+            int day = 0;
+            foreach (var so in listSO)
+            {
+                if (so.day > day) day = so.day;
+                /// add
+
+            }
+            print("Day " + day);
+            PlayerData.Get.GetCharacterData().SetDayReward(day);
+            string timeClaim = dailyRewardTimeChecker.ConvertTimeToString(DateTime.UtcNow);
+            PlayerData.Get.GetCharacterData().SetLastTimeClaimReward(timeClaim);
+        }
+        #region Map
+        void GetCurrentMap()
+        {
+            string mapId = PlayerData.Get.currentMap;
+            Debug.Log("[GameData]  mapid = " + mapId);
+
+            currentMap = mapDataList.FirstOrDefault(c => c.mapId == mapId);
+            if(currentMap == null)
+            {
+                Debug.Log("[GameData] current map = null");
+                SetCurrentMap(mapDataList[0]);
+            }
+            Debug.Log("[GameData] list map " + PlayerData.Get.listDataMap.Count);
+            
+        }
+
+
+
+        public void SetCurrentMap(MapData newmap)
+        {
+            if (newmap == null) return;
+            currentMap = newmap;
+            PlayerData.Get.SetCurrentMap(currentMap.mapId);
         }
         public bool SaveCheckPoint(string idMap, string idCheckPoin)
         {
@@ -143,7 +191,9 @@ namespace Raccoon
             PlayerData.Get.SetCurrentMap(mapDataList[index].mapId);
             SetCurrentMap(mapDataList[index]);
         }
-        
+
+        #endregion
+
         #region Audio
         public void ChangeOnSound(UnityAction<bool> actionChange)
         {
@@ -234,6 +284,11 @@ namespace Raccoon
 
         }
         #endregion
+
+        public Sprite GetBgDailyRewardCurrencyByType(TypeCurrency type)
+        {
+            return listUICurrency.FirstOrDefault(ui => ui.type == type).bgDailyReward;
+        }
     }
 
     [Serializable] struct SoundData
@@ -242,6 +297,15 @@ namespace Raccoon
         public AudioClip clip;
         public float vol;
     }
+    [Serializable]
+    struct UiCurrencyType
+    {
+        public TypeCurrency type;
+        public Sprite bgDailyReward;
+    }
+
+
+
     public enum SoundType 
     {
         Button, ContactSlot, CollectCoin, ContactWave, BaseBatAttack, SaveLoot, UpgradeSuccess, LootItem, FootStep, ChangeMap, 
