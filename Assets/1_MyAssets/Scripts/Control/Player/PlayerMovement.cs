@@ -1,10 +1,8 @@
 using Raccoon.InputCtr;
 using System.Collections;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using UnityEngine.Windows;
 
 namespace Raccoon.Player
 {
