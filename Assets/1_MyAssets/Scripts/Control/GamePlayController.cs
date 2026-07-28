@@ -27,7 +27,7 @@ public class GamePlayController : MonoBehaviour
     }
     #endregion
     public Transform holderMap;
-
+    public GameObject inputUI;
     [Header("Id map sẽ load khi vào game")]
     [Tooltip("Nếu để trống, sẽ lấy từ PlayerPrefs key 'SelectedMapId'")]
     [SerializeField] private string currentMapId;
@@ -45,6 +45,7 @@ public class GamePlayController : MonoBehaviour
     public void Init(MapData mapdata)
     {
         SetCanAction(true);
+        inputUI.SetActive(false);
         canShowPopup = true;
         if (SpawnMap(mapdata))
         {
@@ -71,11 +72,12 @@ public class GamePlayController : MonoBehaviour
 
     void InitFall()
     {
-
+        SceneLoader.Instance.LoadScene("Home");
     }
 
     public void DoneIntro()
     {
+        inputUI.SetActive(true);
         CameraController.instance.gameObject.SetActive(true);
         PlayerController.instance.Init();
     }
@@ -138,6 +140,25 @@ public class GamePlayController : MonoBehaviour
         PlayerController.instance.ResetPlayer();
     }
 
+
+    public void NextLevel()
+    { 
+        GameData.Get.SetWinMap(currentMapId);
+        GameData.Get.NextMap();
+        SceneLoader.Instance.LoadScene("GamePlay");
+
+    }
+
+    public bool SaveCheckPoint(string idCheckpoint)
+    {
+        Debug.Log("[GamePlayController] Save check point");
+
+        return GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
+    }
+    public void WinGame()
+    {
+        Debug.Log("[GamePlayController] Win");
+    }
     #region UI
     public void ShowPopup(PopupCanvas.PopupType type, CharacterData data = null)
     {
@@ -170,18 +191,6 @@ public class GamePlayController : MonoBehaviour
         this.canAction = canAction;
     }
 
-    public bool SaveCheckPoint(string idCheckpoint)
-    {
-        Debug.Log("[GamePlayController] Save check point");
-
-        return GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
-    }
-    public void WinGame()
-    {
-        Debug.Log("[GamePlayController] Win");
-        //GameData.Get.SetWinMap(currentMapId);   
-        //SceneLoader.Instance.LoadScene("Home");
-    }
 
     bool canShowPopup = false;
     bool canAction = false;

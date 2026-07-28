@@ -42,6 +42,7 @@ namespace Raccoon.Controller
         public CharacterData data;
         public CharacterData GetCharactorData => data;
         bool inited = false;
+        public bool Inited => inited;
 
         private void Start()
         {

@@ -13,8 +13,9 @@ public class PlayerCountTimeFall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerController.instance.Inited) return;
         if (PlayerController.instance.PlayerState != EPlayerState.Normal) return;
-        if (PlayerController.instance.movement.isGrounded || PlayerController.instance.movement.climbing || PlayerController.instance.movement.isMantling)
+        if (!PlayerController.instance.movement.IsFalling)
         {
             ResetTimeFall();
             return;

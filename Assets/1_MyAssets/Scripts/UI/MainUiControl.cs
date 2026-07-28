@@ -77,14 +77,14 @@ public class MainUiControl : MonoBehaviour
     //    uiWarning.StartWarning();
     //}
 
-    public void ShowTextWaitAds(float amountWait)
-    {
-        textWaitAds.text = "Loading ads " + (int)(amountWait * 100) + "%";
-    }
+    //public void ShowTextWaitAds(float amountWait)
+    //{
+    //    textWaitAds.text = "Loading ads " + (int)(amountWait * 100) + "%";
+    //}
 
-    public void EnableTextWaitAds(bool isEnable)
-    {
-        textWaitAds.gameObject.SetActive(isEnable);
-    }
+    //public void EnableTextWaitAds(bool isEnable)
+    //{
+    //    textWaitAds.gameObject.SetActive(isEnable);
+    //}
 
 }

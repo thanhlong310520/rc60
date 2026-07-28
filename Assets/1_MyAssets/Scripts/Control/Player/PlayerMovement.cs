@@ -546,6 +546,7 @@ namespace Raccoon.Player
         // timeout deltatime
         private float _fallTimeoutDelta;
         bool isFalling;
+        public bool IsFalling => isFalling;
         void CheckFalling()
         {
             if (isGrounded || climbing || isMantling)

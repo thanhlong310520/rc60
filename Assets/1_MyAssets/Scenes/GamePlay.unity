@@ -505,6 +505,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -556,7 +557,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 3.12
@@ -608,7 +609,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -833,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayController
   holderMap: {fileID: 323485684}
+  inputUI: {fileID: 1805493114}
   currentMapId: 
 --- !u!4 &584386464
 Transform:
@@ -1312,11 +1314,6 @@ MonoBehaviour:
     id: 
     name: 
     coin: 0
-    isUnlockGate: 0
-    currentFashion: 
-    listBotUnlock: []
-    listSlotGate2Unlock: []
-    indexRebirth: 0
 --- !u!114 &1000431733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2336,6 +2333,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35f57f3f987ea2a418f751ca936ca949, type: 3}
+--- !u!1 &1805493114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1095214012306640098, guid: 35f57f3f987ea2a418f751ca936ca949, type: 3}
+  m_PrefabInstance: {fileID: 1805493113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1911985916
 GameObject:
   m_ObjectHideFlags: 0

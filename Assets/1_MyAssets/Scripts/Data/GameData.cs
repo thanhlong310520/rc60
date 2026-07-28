@@ -133,6 +133,17 @@ namespace Raccoon
             var dataMap = PlayerData.Get.GetDataMap(idMap);
             return dataMap != null && dataMap.won;
         }
+        public void NextMap()
+        {
+            int index = mapDataList.FindIndex(c => c.mapId == currentMap.mapId);
+            if (index < 0) index = 0;
+            else index++;
+            if (index >= mapDataList.Count) index = 0;
+
+            PlayerData.Get.SetCurrentMap(mapDataList[index].mapId);
+            SetCurrentMap(mapDataList[index]);
+        }
+        
         #region Audio
         public void ChangeOnSound(UnityAction<bool> actionChange)
         {
