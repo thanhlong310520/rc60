@@ -63,6 +63,7 @@ namespace Raccoon.Controller
         {
             inited = true;
             SetState(EPlayerState.Normal);
+            movement.SetCanMove(true);
         }
 
 
@@ -96,10 +97,12 @@ namespace Raccoon.Controller
         }
         public void SetStartPoint(Transform startPoint)
         {
+            Debug.Log($"[PlayerController] SetStartPoint: {startPoint}");
             if (startPoint != null)
             {
-                transform.position = startPoint.position;
-                transform.rotation = startPoint.rotation;
+                Debug.Log($"[PlayerController] SetStartPoint1: {startPoint}");
+                rb.position = startPoint.position;
+                rb.rotation = startPoint.rotation;
             }
 
         }

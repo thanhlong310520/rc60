@@ -76,7 +76,7 @@ namespace Raccoon.Player
         [SerializeField] public UnityEvent jumpAction;
         [SerializeField] public UnityEvent<float, float> climbAction;
 
-        public bool canMove = true;
+        bool canMove = false;
 
         [Header("Moving Platform")]
         [Tooltip("Player tự xoay theo platform khi đứng trên (vd: vòng xoay, sàn xoay)")]
@@ -95,7 +95,6 @@ namespace Raccoon.Player
 
         private void Start()
         {
-            canMove = true;
             isMantling = false;
             input = new PlayerInput();
             origGroundCheckDistance = groundCheckDistance;
@@ -156,8 +155,8 @@ namespace Raccoon.Player
                 input.Reset();
                 return;
             }
-            if (isMantling) return; // đang trèo lên đỉnh thì không xử lý input khác
 
+            if (isMantling) return; // đang trèo lên đỉnh thì không xử lý input khác
             if (climbing)
             {
                 ResetMove();
@@ -343,26 +342,44 @@ namespace Raccoon.Player
                     slopeAdjustedMoveDir = projected.normalized * moveDir.magnitude;
             }
 
-            moveAround.Move(rb, isMoving, slopeAdjustedMoveDir, moveSpeed, multiSpeedRun, input.isRunning);
+
             ApplyMovingPlatform();
-            Jump();
+
+            moveAround.Move(rb, isMoving, slopeAdjustedMoveDir, moveSpeed, multiSpeedRun, input.isRunning, GetExtendVelocity());
+
             ApplyExtraTurnRotation();
 
             UplineGravityInAir();
 
-        }
+            Jump();
 
+        }
+        Vector3 GetExtendVelocity()
+        {
+            return platformPointVelocity + extendVelocity;
+        }
         // Cộng vận tốc + xoay của platform (nếu player đang đứng trên 1 vật có Rigidbody) vào player.
         // Dùng GetPointVelocity nên đúng cả với platform tịnh tiến (xe, thang máy) lẫn xoay (vòng xoay).
+
+        Vector3 extendVelocity = Vector3.zero;
+        public void SetExtendVelocity(Vector3 extendV)
+        {
+            extendVelocity = extendV;
+        }
+        Vector3 platformPointVelocity;
         void ApplyMovingPlatform()
         {
-            if (currentPlatformRb == null) return;
+            if (currentPlatformRb == null)
+            {
+                platformPointVelocity = Vector3.zero;
+                return;
+            }
 
-            Vector3 platformPointVelocity = currentPlatformRb.GetPointVelocity(rb.position);
+            platformPointVelocity = currentPlatformRb.GetPointVelocity(rb.position);
             if (!followPlatformVerticalMotion)
+            {
                 platformPointVelocity.y = 0f;
-
-            rb.linearVelocity += platformPointVelocity;
+            }
 
             if (rotateWithPlatform)
             {
@@ -515,6 +532,7 @@ namespace Raccoon.Player
             if (isGrounded)
             {
                 rb.linearVelocity += Vector3.up * (-9.8f) * Time.deltaTime;
+                //rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.deltaTime;
                 return;
             }
 

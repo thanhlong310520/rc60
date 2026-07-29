@@ -60,8 +60,9 @@ namespace Raccoon.Controller
         {
             EventBus.Unsubscribe<CameraInput>(UpdateInput);
         }
-        // Update is called once per frame
-        void Update()
+        
+
+        private void LateUpdate()
         {
             UpdateCamera(true);
         }

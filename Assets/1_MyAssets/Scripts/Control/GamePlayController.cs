@@ -32,6 +32,7 @@ public class GamePlayController : MonoBehaviour
     [Tooltip("Nếu để trống, sẽ lấy từ PlayerPrefs key 'SelectedMapId'")]
     [SerializeField] private string currentMapId;
 
+    [SerializeField] PlayerController player;
     private GameObject currentMapInstance;
     private MapController currentMapController;
 
@@ -51,16 +52,11 @@ public class GamePlayController : MonoBehaviour
         {
             CameraController.instance.gameObject.SetActive(false);
             var startPoint = GetStartPoint();
-            if(startPoint == null)
+            player.SetStartPoint(startPoint);
+            if (startPoint == null)
             {
                 Debug.Log(($"[GamePlayController] Init False: Khong lay duoc startPoint"));
                 InitFall();
-            }
-            else
-            {
-                Debug.Log(($"[GamePlayController] Init Done"));
-
-                PlayerController.instance.SetStartPoint(startPoint);
             }
         }
         else
@@ -79,7 +75,7 @@ public class GamePlayController : MonoBehaviour
     {
         inputUI.SetActive(true);
         CameraController.instance.gameObject.SetActive(true);
-        PlayerController.instance.Init();
+        player.Init();
     }
 
     /// <summary>
@@ -112,15 +108,16 @@ public class GamePlayController : MonoBehaviour
         }
 
         currentMapId = data.mapId;
-
-        currentMapController.Init();
+        currentMapController.Init(player.transform, true);
         Debug.Log($"[GamePlayController] Đã spawn map: {data.mapId}");
         return true;
     }
 
     public Transform GetStartPoint()
     {
+        Debug.Log($"[GamePlayController] GetStartPoint: {currentMapId}");
         string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+        Debug.Log($"[GamePlayController]  LastCheckpoint: {idCheckpoint}");
         return currentMapController.GetCheckpointTransform(idCheckpoint);
     }
 

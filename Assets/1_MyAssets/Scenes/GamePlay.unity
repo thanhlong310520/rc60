@@ -836,6 +836,7 @@ MonoBehaviour:
   holderMap: {fileID: 323485684}
   inputUI: {fileID: 1805493114}
   currentMapId: 
+  player: {fileID: 1000431732}
 --- !u!4 &584386464
 Transform:
   m_ObjectHideFlags: 0
@@ -1290,7 +1291,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!114 &1000431732
@@ -1314,6 +1315,8 @@ MonoBehaviour:
     id: 
     name: 
     coin: 0
+    lastTimeClaimReward: 
+    dayReward: 0
 --- !u!114 &1000431733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,7 +1379,6 @@ MonoBehaviour:
   climbAction:
     m_PersistentCalls:
       m_Calls: []
-  canMove: 1
   rotateWithPlatform: 1
   followPlatformVerticalMotion: 0
   FallTimeout: 0.15
@@ -2114,7 +2116,7 @@ MonoBehaviour:
   cameraOrthoMaxSize: 20
   cameraOrthoDistance: 150
   avoidObstacles: 0
-  targetOffset: {x: 0, y: 0.75, z: 0}
+  targetOffset: {x: 0, y: 1, z: 0}
   cameraOffset: {x: 0, y: 0, z: 0}
   obstacleLayer:
     serializedVersion: 2

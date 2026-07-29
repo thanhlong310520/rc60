@@ -36,7 +36,7 @@ public class MapController : MonoBehaviour
     /// </summary>
     public Transform GetCheckpointTransform(string id)
     {
-        Checkpoint cp = checkpoints.Find(c => c.id == id);
+        Checkpoint cp = checkpoints.FirstOrDefault(c => c.id == id);
 
         if (cp != null)
             return cp.GetPointPlayerStay();
@@ -57,13 +57,21 @@ public class MapController : MonoBehaviour
         return null;
     }
 
-    public void Init()
+    public void Init(Transform player, bool showIntro = true)
     {
         foreach (var c in checkpoints)
         {
             c.Init(this);
         }
-        introCameraController.PlayIntroNow(PlayerController.instance.transform);
+        if (showIntro)
+        {
+            introCameraController.PlayIntroNow(player);
+        }
+        else
+        {
+            introCameraController.cam.gameObject.SetActive(false);
+            EndIntro();
+        }
     }
 
 
