@@ -415,6 +415,7 @@ MonoBehaviour:
     bgDailyReward: {fileID: 81242137, guid: 9fd3937c331f66342b2149e9a16cb2a5, type: 3}
   - type: 1
     bgDailyReward: {fileID: -1182100714, guid: 9fd3937c331f66342b2149e9a16cb2a5, type: 3}
+  defaultSkinBody: {fileID: 0}
   audioBg: []
   listSoundFX: []
   isShowVip: 0

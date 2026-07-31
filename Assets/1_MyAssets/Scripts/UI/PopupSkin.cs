@@ -94,9 +94,10 @@ public class PopupSkin : PopupCanvas
     void SetDataItem(ItemSkin item, SoSkin data)
     {
         CharacterData cd = GameData.Get.GetCharacterData();
+        SoSkin skin = GameData.Get.currentSkinSOs.FirstOrDefault(s => s.typeSkin == data.typeSkin);
         bool isUse = false;
         bool isUnlock = false;
-        if (cd.GetIdCurrentSkin(data.typeSkin) == data.id)
+        if (skin == data)
         {
             currentItem = item;
             isUse = true;
@@ -115,6 +116,8 @@ public class PopupSkin : PopupCanvas
         currentItem?.SetSelected(false);
         currentItem = item;
         currentItem?.SetSelected(true);
+
+        GameData.Get.ChangeSkin(item.data);
     }
     private void ClickTap(TabTypeSkinUI uI)
     {

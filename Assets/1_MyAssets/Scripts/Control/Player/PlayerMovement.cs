@@ -531,12 +531,12 @@ namespace Raccoon.Player
         {
             if (isGrounded)
             {
-                rb.linearVelocity += Vector3.up * (-9.8f) * Time.deltaTime;
-                //rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.deltaTime;
+                //rb.linearVelocity += Vector3.up * (-9.8f) * Time.deltaTime;
+                rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.fixedDeltaTime;
                 return;
             }
 
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.deltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (gravityMultiplier) * Time.fixedDeltaTime;
             groundCheckDistance = rb.linearVelocity.y < 0 ? origGroundCheckDistance : 0.1f;
         }
         void Jump()

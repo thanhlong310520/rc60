@@ -16,7 +16,7 @@ namespace Raccoon
         [SerializeField] public List<SoSkin> listSkinSO;
         [SerializeField] public List<SoDailyReward> listDailyRewardSO;
         [SerializeField] List<UiCurrencyType> listUICurrency;
-
+        [SerializeField] List<SoSkin> defaultSkin;
 
         public DailyRewardTimeChecker dailyRewardTimeChecker = new DailyRewardTimeChecker();
 
@@ -33,6 +33,11 @@ namespace Raccoon
         public bool isShowVip;
 
         public MapData currentMap;
+
+
+        public List<SoSkin> currentSkinSOs;
+
+
         private void Awake()
         {
             instance = this;
@@ -48,6 +53,7 @@ namespace Raccoon
             //ObserverEventManager.Instance.Subscribe<SoundType>(EventObserverName.PlaySfx.ToString(),PlaySFX);
             CheckSubscribe();
             GetCurrentMap();
+            currentSkinSOs = GetListCurrentSkinUserUse();
         }
 
 
@@ -285,6 +291,45 @@ namespace Raccoon
         }
         #endregion
 
+
+        public List<SoSkin> GetListCurrentSkinUserUse()
+        {
+            List<SoSkin> soSkins = new List<SoSkin>();
+            foreach (TypeSkin type in Enum.GetValues(typeof(TypeSkin)))
+            {
+                string idSkin = GetCharacterData().GetIdCurrentSkin(type);
+                if(idSkin != null || !string.IsNullOrEmpty(idSkin))
+                {
+                    var so = GetSkin(type, idSkin);
+                    if (so != null) soSkins.Add(so);
+                }
+                else
+                {
+                    foreach (var s in defaultSkin)
+                    {
+                        if(s.typeSkin == type) soSkins.Add(s);
+                    }
+                }
+            }
+
+            return soSkins;
+        }
+
+        public SoSkin GetSkin(TypeSkin type,string id)
+        {
+            SoSkin result = listSkinSO.FirstOrDefault(so => (so.typeSkin == type && so.id == id));
+            return result;
+        }
+
+        public void ChangeSkin(SoSkin so)
+        {
+            if (so == null) return;
+            var removeSo = currentSkinSOs.FirstOrDefault(s => s.typeSkin == so.typeSkin);
+            if(removeSo!= null) currentSkinSOs.Remove(removeSo);
+            currentSkinSOs.Add(so);
+            GetCharacterData().ChangeFashion(so.typeSkin, so.id);
+            GetCharacterData().AddOwnSkin(so.typeSkin, so.id);
+        }
         public Sprite GetBgDailyRewardCurrencyByType(TypeCurrency type)
         {
             return listUICurrency.FirstOrDefault(ui => ui.type == type).bgDailyReward;

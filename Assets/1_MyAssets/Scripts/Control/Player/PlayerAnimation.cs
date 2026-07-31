@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Raccoon.Player
@@ -13,11 +14,10 @@ namespace Raccoon.Player
     /// - climbing / isMantling là field public trên PlayerMovement nên được đọc trực tiếp
     ///   mỗi frame (không cần event riêng).
     /// </summary>
-    [RequireComponent(typeof(Animator))]
     public class PlayerAnimation : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Animator animator;
+        [SerializeField] private List<Animator> animator;
         [SerializeField] private PlayerMovement playerMovement;
 
         [Header("Blend / Damping")]
@@ -44,14 +44,12 @@ namespace Raccoon.Player
 
         private void Reset()
         {
-            animator = GetComponent<Animator>();
             playerMovement = GetComponentInParent<PlayerMovement>();
             
         }
 
         private void Awake()
         {
-            if (animator == null) animator = GetComponent<Animator>();
             if (playerMovement == null) playerMovement = GetComponentInParent<PlayerMovement>();
 
             if(playerMovement != null)
@@ -82,10 +80,10 @@ namespace Raccoon.Player
         {
             if (animator == null) return;
 
-            animator.SetFloat(HashForward, forwardAmount, moveDampTime, Time.deltaTime);
-            animator.SetFloat(HashTurn, turnAmount, moveDampTime, Time.deltaTime);
-            animator.SetBool(HashGrounded, isGrounded);
-            animator.SetBool(IsFalling, isFalling);
+            SetFloatAnim(HashForward, forwardAmount, moveDampTime, Time.deltaTime);
+            SetFloatAnim(HashTurn, turnAmount, moveDampTime, Time.deltaTime);
+            SetBoolAnim(HashGrounded, isGrounded);
+            SetBoolAnim(IsFalling, isFalling);
 
             if (playerMovement != null)
             {
@@ -93,7 +91,7 @@ namespace Raccoon.Player
                 if (playerMovement.IsRunning) speed += playerMovement.MultiSpeedRun * 0.1f;
 
                 // 1 + multiSpeedRun để Animator có thể dùng làm hệ số tăng tốc clip chạy (Animator.speed hoặc blend)
-                animator.SetFloat(HashSpeedMultiplier, speed);
+                SetFloatAnim(HashSpeedMultiplier, speed);
             }
         }
 
@@ -103,9 +101,10 @@ namespace Raccoon.Player
         public void OnJumpStart()
         {
             if (animator == null) return;
-            animator.ResetTrigger(HashJump);
-            animator.SetTrigger(HashJump);
+            ResetTriggerAnim(HashJump);
+            SetTriggerAnim(HashJump);
         }
+
 
         /// <summary>
         /// Gọi từ UnityEvent jumpedAction của PlayerMovement (nếu bạn dùng event này để báo hiệu đã tiếp đất).
@@ -113,7 +112,7 @@ namespace Raccoon.Player
         public void OnLanded()
         {
             if (animator == null) return;
-            animator.ResetTrigger(HashJump);
+            ResetTriggerAnim(HashJump);
         }
 
         /// <summary>
@@ -129,13 +128,13 @@ namespace Raccoon.Player
 
             if (climbing != prevClimbing)
             {
-                animator.SetBool(HashClimbing, climbing);
+                SetBoolAnim(HashClimbing, climbing);
                 prevClimbing = climbing;
             }
 
             if (mantling != prevMantling)
             {
-                animator.SetBool(HashMantling, mantling);
+                SetBoolAnim(HashMantling, mantling);
                 prevMantling = mantling;
             }
         }
@@ -145,7 +144,48 @@ namespace Raccoon.Player
             if (ver > 0.1f) ver = 1;
             else if (ver < -0.1f) ver = -1;
             else ver = 0;
-            animator.SetFloat(HashSpeedClimb, ver);
+            SetFloatAnim(HashSpeedClimb, ver);
+        }
+
+        public void SetFloatAnim(int paramName, float value)
+        {
+            foreach (var a in animator)
+            {
+                if (a == null) return;
+                a.SetFloat(paramName, value);
+            }
+        }
+        public void SetFloatAnim(int paramName, float value, float dampTime, float deltaTime)
+        {
+            foreach (var a in animator)
+            {
+                if (a == null) return;
+                a.SetFloat(paramName, value, dampTime, deltaTime);
+            }
+        }
+        public void SetBoolAnim(int paramName, bool value)
+        {
+            foreach (var a in animator)
+            {
+                if (a == null) return;
+                a.SetBool(paramName, value);
+            }
+        }
+        public void SetTriggerAnim(int paramName)
+        {
+            foreach (var a in animator)
+            {
+                if (a == null) return;
+                a.SetTrigger(paramName);
+            }
+        }
+        public void ResetTriggerAnim(int paramName)
+        {
+            foreach (var a in animator)
+            {
+                if (a == null) return;
+                a.ResetTrigger(paramName);
+            }
         }
     }
 }
