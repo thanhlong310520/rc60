@@ -17,7 +17,7 @@ namespace Raccoon.Player
     public class PlayerAnimation : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private List<Animator> animator;
+        [SerializeField] private List<SkinGO> skinGo;
         [SerializeField] private PlayerMovement playerMovement;
 
         [Header("Blend / Damping")]
@@ -78,7 +78,7 @@ namespace Raccoon.Player
         /// </summary>
         public void OnAnimMove(float forwardAmount, float turnAmount, bool isGrounded, bool isFalling)
         {
-            if (animator == null) return;
+            if (skinGo == null) return;
 
             SetFloatAnim(HashForward, forwardAmount, moveDampTime, Time.deltaTime);
             SetFloatAnim(HashTurn, turnAmount, moveDampTime, Time.deltaTime);
@@ -100,7 +100,7 @@ namespace Raccoon.Player
         /// </summary>
         public void OnJumpStart()
         {
-            if (animator == null) return;
+            if (skinGo == null) return;
             ResetTriggerAnim(HashJump);
             SetTriggerAnim(HashJump);
         }
@@ -111,7 +111,7 @@ namespace Raccoon.Player
         /// </summary>
         public void OnLanded()
         {
-            if (animator == null) return;
+            if (skinGo == null) return;
             ResetTriggerAnim(HashJump);
         }
 
@@ -121,7 +121,7 @@ namespace Raccoon.Player
         /// </summary>
         private void UpdateClimbAndMantleState()
         {
-            if (playerMovement == null || animator == null) return;
+            if (playerMovement == null || skinGo == null) return;
 
             bool climbing = playerMovement.climbing;
             bool mantling = playerMovement.isMantling;
@@ -149,42 +149,56 @@ namespace Raccoon.Player
 
         public void SetFloatAnim(int paramName, float value)
         {
-            foreach (var a in animator)
+            foreach (var a in skinGo)
             {
                 if (a == null) return;
-                a.SetFloat(paramName, value);
+                a.animator.SetFloat(paramName, value);
             }
         }
         public void SetFloatAnim(int paramName, float value, float dampTime, float deltaTime)
         {
-            foreach (var a in animator)
+            foreach (var a in skinGo)
             {
                 if (a == null) return;
-                a.SetFloat(paramName, value, dampTime, deltaTime);
+                a.animator.SetFloat(paramName, value, dampTime, deltaTime);
             }
         }
         public void SetBoolAnim(int paramName, bool value)
         {
-            foreach (var a in animator)
+            foreach (var a in skinGo)
             {
                 if (a == null) return;
-                a.SetBool(paramName, value);
+                a.animator.SetBool(paramName, value);
             }
         }
         public void SetTriggerAnim(int paramName)
         {
-            foreach (var a in animator)
+            foreach (var a in skinGo)
             {
                 if (a == null) return;
-                a.SetTrigger(paramName);
+                a.animator.SetTrigger(paramName);
             }
         }
         public void ResetTriggerAnim(int paramName)
         {
-            foreach (var a in animator)
+            foreach (var a in skinGo)
             {
                 if (a == null) return;
-                a.ResetTrigger(paramName);
+                a.animator.ResetTrigger(paramName);
+            }
+        }
+
+        public void SetSkin(GameObject go)
+        {
+            if(skinGo == null) skinGo = new List<SkinGO>();
+
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.identity;
+            var s = go.GetComponent<SkinGO>();
+
+            if (s != null)
+            {
+                skinGo.Add(s);
             }
         }
     }

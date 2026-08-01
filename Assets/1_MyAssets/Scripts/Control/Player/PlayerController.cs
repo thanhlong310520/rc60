@@ -31,6 +31,7 @@ namespace Raccoon.Controller
         public EPlayerState PlayerState { get { return playerState; } }
         
         public PlayerMovement movement;
+        public PlayerAnimation playerAnimation;
         public PlayerCountTimeFall pCountTimeFall;
 
 
@@ -38,7 +39,7 @@ namespace Raccoon.Controller
         public CapsuleCollider capsule;
 
         public Camera mainCam;
-
+        public Transform modelHolder;
         public CharacterData data;
         public CharacterData GetCharactorData => data;
         bool inited = false;
@@ -48,6 +49,21 @@ namespace Raccoon.Controller
         {
             movement.Init(rb, capsule);
             //Init();
+
+            var currentSkinSOs = GameData.Get.currentSkinSOs;
+            SetModel(currentSkinSOs);
+        }
+
+        public void SetModel(List<SoSkin> soSkins)
+        {
+
+            foreach (var so in soSkins)
+            {
+                var go = Instantiate(so.prefab, modelHolder);
+                go.transform.localPosition = Vector3.zero;
+                go.transform.localRotation = Quaternion.identity;
+                playerAnimation.SetSkin(go);
+            }
         }
 
         private void OnEnable()

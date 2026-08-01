@@ -12581,16 +12581,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
   m_Padding:
     m_Left: 0
-    m_Right: 15
+    m_Right: 50
     m_Top: 35
     m_Bottom: 0
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 272, y: 340}
-  m_Spacing: {x: 25, y: 25}
+  m_Spacing: {x: 40, y: 40}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 3
 --- !u!114 &1047164158378242667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13433,7 +13433,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -25, y: -50}
-  m_SizeDelta: {x: 20, y: -100}
+  m_SizeDelta: {x: 32, y: -100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &5283387816900131109
 MonoBehaviour:
@@ -13502,7 +13502,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: -29, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &5426868370835509599
 GameObject:
@@ -13870,7 +13870,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7698597077116006266
 MonoBehaviour:
@@ -13988,7 +13988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -612918909, guid: d2443424ea495b244ab8ab31bf30c98c, type: 3}
+  m_Sprite: {fileID: 737148705, guid: 370be15b43d6c9446a3967d5b337abb5, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14072,7 +14072,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -971376765, guid: d2443424ea495b244ab8ab31bf30c98c, type: 3}
+  m_Sprite: {fileID: -1633130534, guid: 370be15b43d6c9446a3967d5b337abb5, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
