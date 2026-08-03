@@ -22,6 +22,7 @@ public class MainUiControl : MonoBehaviour
         }
     }
 
+
     public TextMeshProUGUI textCoin;
     public List<PopupCanvas> popups;
 
@@ -29,8 +30,12 @@ public class MainUiControl : MonoBehaviour
     //public UIWarning uiWarning;
     public TMP_Text textWaitAds;
 
-    
-    
+    public TMP_Text percentRun;
+    public TMP_Text textIndexCheckPoint;
+    public Slider sliderRun;
+
+
+
     //VipSubPopup vip;
 
     private void Start()
@@ -86,5 +91,20 @@ public class MainUiControl : MonoBehaviour
     //{
     //    textWaitAds.gameObject.SetActive(isEnable);
     //}
+
+
+    public void ShowCheckPoint(float percent)
+    {
+        // Implementation for showing checkpoint UI
+        if(percent > 1) percent = 1;
+        if(percent < 0) percent = 0;
+        percentRun.text = Mathf.RoundToInt(percent * 100).ToString() + "%";
+        sliderRun.value = percent;
+
+    }
+    public void ShowIndexCheckPoint(int index, int total)
+    {
+        textIndexCheckPoint.text = $"{index}/{total}";
+    }
 
 }

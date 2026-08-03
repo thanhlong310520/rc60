@@ -28,6 +28,7 @@ public class GamePlayController : MonoBehaviour
     #endregion
     public Transform holderMap;
     public GameObject inputUI;
+    public MainUiControl mainUiControl;
     [Header("Id map sẽ load khi vào game")]
     [Tooltip("Nếu để trống, sẽ lấy từ PlayerPrefs key 'SelectedMapId'")]
     [SerializeField] private string currentMapId;
@@ -47,12 +48,20 @@ public class GamePlayController : MonoBehaviour
     {
         SetCanAction(true);
         inputUI.SetActive(false);
+        mainUiControl.gameObject.SetActive(false);
         canShowPopup = true;
         if (SpawnMap(mapdata))
         {
             CameraController.instance.gameObject.SetActive(false);
             var startPoint = GetStartPoint();
             player.SetStartPoint(startPoint);
+
+            string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+            int index = currentMapController.GetIndexCheckpoint(idCheckpoint);
+            ShowUICheckpoint(index, currentMapController.GetCheckpoints().Count);
+
+
+
             if (startPoint == null)
             {
                 Debug.Log(($"[GamePlayController] Init False: Khong lay duoc startPoint"));
@@ -74,6 +83,7 @@ public class GamePlayController : MonoBehaviour
     public void DoneIntro()
     {
         inputUI.SetActive(true);
+        mainUiControl.gameObject.SetActive(true);
         CameraController.instance.gameObject.SetActive(true);
         player.Init();
     }
@@ -115,9 +125,11 @@ public class GamePlayController : MonoBehaviour
 
     public Transform GetStartPoint()
     {
-        Debug.Log($"[GamePlayController] GetStartPoint: {currentMapId}");
         string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+
+        Debug.Log($"[GamePlayController] GetStartPoint: {currentMapId}");
         Debug.Log($"[GamePlayController]  LastCheckpoint: {idCheckpoint}");
+
         return currentMapController.GetCheckpointTransform(idCheckpoint);
     }
 
@@ -152,9 +164,10 @@ public class GamePlayController : MonoBehaviour
 
         return GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
     }
-    public void WinGame()
+    public void WinGame(Vector3 dirCheckpoint)
     {
         Debug.Log("[GamePlayController] Win");
+        PlayerController.instance.SetWin(dirCheckpoint);
     }
     #region UI
     public void ShowPopup(PopupCanvas.PopupType type, CharacterData data = null)
@@ -188,6 +201,14 @@ public class GamePlayController : MonoBehaviour
         this.canAction = canAction;
     }
 
+    public void ShowUICheckpoint(int index, int total)
+    {
+        // Implementation for showing UI checkpoint
+
+        float percent = (float)(index + 1) / total;
+        mainUiControl.ShowCheckPoint(percent);
+        mainUiControl.ShowIndexCheckPoint(index + 1, total);
+    }
 
     bool canShowPopup = false;
     bool canAction = false;

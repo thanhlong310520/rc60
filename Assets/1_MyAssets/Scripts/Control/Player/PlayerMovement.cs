@@ -153,7 +153,6 @@ namespace Raccoon.Player
             {
                 ResetMove();
                 input.Reset();
-                return;
             }
 
             if (isMantling) return; // đang trèo lên đỉnh thì không xử lý input khác

@@ -38,6 +38,7 @@ namespace Raccoon.Player
         private static readonly int HashMantling = Animator.StringToHash("Mantling");
         private static readonly int HashSpeedMultiplier = Animator.StringToHash("SpeedMultiplier");
         private static readonly int HashSpeedClimb = Animator.StringToHash("SpeedClimb");
+        private static readonly int HashDance = Animator.StringToHash("Dance");
 
         private bool prevClimbing;
         private bool prevMantling;
@@ -137,6 +138,11 @@ namespace Raccoon.Player
                 SetBoolAnim(HashMantling, mantling);
                 prevMantling = mantling;
             }
+        }
+
+        public void OnDance(bool isDance)
+        {
+            SetBoolAnim(HashDance, isDance);
         }
 
         void UpdateSpeedClimb(float hor, float ver)

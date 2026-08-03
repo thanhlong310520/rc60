@@ -108,6 +108,11 @@ namespace Raccoon.Controller
         public void UpdateValueInput(PlayerInput value)
         {
             if (value == null) return;
+            if (playerState == EPlayerState.Win)
+            {
+                value.Reset();
+                playerAnimation.OnDance(true);
+            }
             movement.SetInput(value);
 
         }
@@ -148,6 +153,12 @@ namespace Raccoon.Controller
             playerState = state;
 
         }
+
+        public void SetWin(Vector3 dirCheckpoint)
+        {
+            transform.rotation = Quaternion.LookRotation(dirCheckpoint);
+            SetState(EPlayerState.Win);
+        }
     }
 
     public enum EPlayerState
@@ -155,6 +166,7 @@ namespace Raccoon.Controller
         None,
         Normal,
         Dead,
+        Win,
     }
 
 

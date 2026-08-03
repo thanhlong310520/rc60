@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Map1
   m_EditorClassIdentifier: Assembly-CSharp::MapData
   mapId: map1
-  mapPrefab: {fileID: 5076630059928842292, guid: 337f00267646bd14ebe476c588312dcc, type: 3}
+  mapPrefab: {fileID: 3414148548750504826, guid: 0d2b13c83f0b8924ebad9741468698a2, type: 3}

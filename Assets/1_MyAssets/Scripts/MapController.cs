@@ -81,6 +81,7 @@ public class MapController : MonoBehaviour
     public void OnPlayerHitCheckpoint(Checkpoint checkpoint)
     {
         if (checkpoint == null) return;
+        ShowUICheckpoint(checkpoint);
         SaveCheckpointData(checkpoint);
     }
 
@@ -112,18 +113,44 @@ public class MapController : MonoBehaviour
                 Debug.Log($"[MapController] Đã lưu checkpoint: {checkpoint.id}");
             if (checkpoint.isEndPoint)
             {
-                WinGame();
+                WinGame(checkpoint);
             }
         }
         else
         {
             Debug.Log($"[MapController] have checkpoint");
         }
+
     }
 
-    private void WinGame()
+    private void WinGame(Checkpoint checkpoint)
     {
         Debug.Log("[MapController] Win game!");
-        GamePlayController.instance.WinGame();
+        GamePlayController.instance.WinGame(checkpoint.GetPointPlayerStay().transform.forward);
+    }
+
+    public void ShowUICheckpoint(Checkpoint cp)
+    {
+        int index = checkpoints.IndexOf(cp);
+        GamePlayController.instance.ShowUICheckpoint(index, checkpoints.Count);
+    }
+
+    public int GetIndexCheckpoint(string id)
+    {
+        int index = checkpoints.FindIndex(c => c.id == id);
+        return index;
+    }
+
+    public float GetPercentCheckpoint(string id)
+    {
+        int index = GetIndexCheckpoint(id);
+        if (index < 0) return 0;
+        float percent = (float)(index + 1) / checkpoints.Count;
+        return percent;
+    }
+
+    public List<Checkpoint> GetCheckpoints()
+    {
+        return checkpoints;
     }
 }

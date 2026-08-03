@@ -9,5 +9,6 @@ using UnityEngine;
 public class MapData : ScriptableObject
 {
     public string mapId;
+    public Sprite avt;
     public GameObject mapPrefab;
 }
