@@ -89,7 +89,10 @@ public class IntroCameraController : MonoBehaviour
         // ---------- GIAI ĐOẠN 1: Bay thẳng lên từ endPoint ----------
         Vector3 startPos = endPoint.position + offsetEndPoint;
         Vector3 risePos = startPos + Vector3.up * riseHeight;
+        Vector3 dir = -offsetEndPoint;
+        dir.y = 0f; // chỉ lấy hướng ngang, bỏ trục y
 
+        print("IntroCameraController: startPos=" + startPos + ", risePos=" + risePos + ", dir=" + dir); 
         cam.position = startPos;
         LookAtEndPoint();
 
@@ -100,6 +103,7 @@ public class IntroCameraController : MonoBehaviour
             float p = easeCurve.Evaluate(Mathf.Clamp01(t / riseDuration));
 
             cam.position = Vector3.Lerp(startPos, risePos, p);
+            cam.transform.rotation = Quaternion.LookRotation(dir.normalized); // luôn nhìn về endPoint
             LookAtEndPoint(); // giai đoạn bay lên: nhìn xuống endPoint, KHÔNG nhìn player
 
             yield return null;

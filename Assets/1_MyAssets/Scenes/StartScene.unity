@@ -401,6 +401,7 @@ MonoBehaviour:
   mapDataList:
   - {fileID: 11400000, guid: e4301020963b97d49829658e0ac21c76, type: 2}
   - {fileID: 11400000, guid: 339bdfcc3dabb3e47bc24a945feb1db9, type: 2}
+  - {fileID: 11400000, guid: 99530c64cab22fe48a9774dbb650ffc0, type: 2}
   listSkinSO:
   - {fileID: 11400000, guid: de348fb4352929f48bec3b41c3d558fe, type: 2}
   - {fileID: 11400000, guid: 2293927bf9553f847ae3a11cfa11ae86, type: 2}

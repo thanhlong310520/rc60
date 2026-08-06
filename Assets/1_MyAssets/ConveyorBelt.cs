@@ -20,7 +20,6 @@ namespace Raccoon.Player
         {
             if(collision.transform == PlayerController.instance.transform)
             {
-
                 PlayerController.instance.movement.SetExtendVelocity(new Vector3(ConveyorVelocity.x, 0, ConveyorVelocity.z));
             }
         }

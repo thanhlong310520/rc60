@@ -55,7 +55,6 @@ namespace Raccoon.Player
         public bool isMantling;
         Rigidbody rb;
         CapsuleCollider capsuleCollider;
-        PlayerInput input;
         Vector3 moveDir, camForward;
 
         Vector3 dirForward;
@@ -96,7 +95,6 @@ namespace Raccoon.Player
         private void Start()
         {
             isMantling = false;
-            input = new PlayerInput();
             origGroundCheckDistance = groundCheckDistance;
             moveAround = new MoveAround();
             jumpHandle = new JumpHandle(numberJump);
@@ -120,9 +118,15 @@ namespace Raccoon.Player
         }
         public void SetInput(PlayerInput input)
         {
-            this.input = input;
             IsRunning = input.isRunning;
+            horizontalInput = input.horizontalAxis;
+            verticalInput = input.verticalAxis;
 
+            if(!isJumpInput)
+            {
+                isJumpInput = input.isJump;
+                input.isJump = false;
+            }
         }
         public void SetDirFoward(Vector3 dirForward)
         {
@@ -132,13 +136,23 @@ namespace Raccoon.Player
         {
             this.dirRight = dirRight;
         }
+
+        float horizontalInput;
+        float verticalInput;
+        bool isJumpInput;
+        public void ResetInput()
+        {
+            horizontalInput = 0f;
+            verticalInput = 0f;
+            isJumpInput = false;
+        }
         private void Update()
         {
             actionAnimMove?.Invoke(forwardAmount, turnAmount, isGrounded, isFalling);
             if (!canMove)
             {
                 ResetMove();
-                input.Reset();
+                ResetInput();
                 return;
             }
 
@@ -152,7 +166,7 @@ namespace Raccoon.Player
             if (!canMove)
             {
                 ResetMove();
-                input.Reset();
+                ResetInput();
             }
 
             if (isMantling) return; // đang trèo lên đỉnh thì không xử lý input khác
@@ -227,8 +241,8 @@ namespace Raccoon.Player
             // Mặt luôn hướng vào thang, không xoay theo input nữa
             transform.rotation = Quaternion.LookRotation(-currentLadderNormal, Vector3.up);
 
-            float h = input.horizontalAxis;
-            float v = input.verticalAxis;
+            float h = this.horizontalInput;
+            float v = this.verticalInput;
 
             if (v > 0.1f) v = 1;
             else if (v < -0.1f) v = -1;
@@ -344,7 +358,7 @@ namespace Raccoon.Player
 
             ApplyMovingPlatform();
 
-            moveAround.Move(rb, isMoving, slopeAdjustedMoveDir, moveSpeed, multiSpeedRun, input.isRunning, GetExtendVelocity());
+            moveAround.Move(rb, isMoving, slopeAdjustedMoveDir, moveSpeed, multiSpeedRun, IsRunning, GetExtendVelocity());
 
             ApplyExtraTurnRotation();
 
@@ -404,8 +418,8 @@ namespace Raccoon.Player
 
         void CalculateMoveDir()
         {
-            float h = input.horizontalAxis;
-            float v = input.verticalAxis;
+            float h = this.horizontalInput;
+            float v = this.verticalInput;
 
             camForward = Vector3.Scale(dirForward, new Vector3(1, 0, 1)).normalized;
             moveDir = v * camForward + h * dirRight;
@@ -540,13 +554,13 @@ namespace Raccoon.Player
         }
         void Jump()
         {
-            if (input.isJump)
+            if (isJumpInput)
             {
                 jumpHandle.Jump(rb, isGrounded, jumpPower, ActionJump);
                 isGrounded = false;
             }
             if (isGrounded && rb.linearVelocity.y < 0) jumpHandle.ResetJump();
-            input.isJump = false;
+            isJumpInput = false;
         }
 
         void ActionJump()

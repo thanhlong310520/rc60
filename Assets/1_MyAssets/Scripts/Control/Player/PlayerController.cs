@@ -108,11 +108,11 @@ namespace Raccoon.Controller
         public void UpdateValueInput(PlayerInput value)
         {
             if (value == null) return;
-            if (playerState == EPlayerState.Win)
-            {
-                value.Reset();
-                playerAnimation.OnDance(true);
-            }
+            //if (playerState == EPlayerState.Win)
+            //{
+            //    value.Reset();
+            //    playerAnimation.OnDance(true);
+            //}
             movement.SetInput(value);
 
         }
@@ -136,6 +136,7 @@ namespace Raccoon.Controller
         public void Dead()
         {
             Debug.Log(($"[PlayerController] Dead"));
+            modelHolder.gameObject.SetActive(false);
             GamePlayController.instance.ShowPopup(PopupCanvas.PopupType.Dead, data);
             movement.SetCanMove(false);
             SetState(EPlayerState.Dead);
@@ -144,6 +145,7 @@ namespace Raccoon.Controller
         public void ResetPlayer()
         {
             SetState(EPlayerState.Normal);
+            modelHolder.gameObject.SetActive(true);
             movement.SetCanMove(true);
             pCountTimeFall.ResetTimeFall();
         }
@@ -159,6 +161,7 @@ namespace Raccoon.Controller
             transform.rotation = Quaternion.LookRotation(dirCheckpoint);
             SetState(EPlayerState.Win);
         }
+        
     }
 
     public enum EPlayerState
