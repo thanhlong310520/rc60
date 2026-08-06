@@ -9,20 +9,47 @@ namespace Raccoon.Player
     // của chính GameObject này (xem ApplyConveyor() trong PlayerMovement.cs).
     public class ConveyorBelt : MonoBehaviour
     {
-        [Tooltip("Tốc độ đẩy player (m/s) theo hướng forward (trục Z xanh dương) của platform này")]
+        public enum Axis
+        {
+            Forward,   // trục Z (xanh dương)
+            Right,     // trục X (đỏ)
+            Up         // trục Y (xanh lá)
+        }
+
+        [Tooltip("Trục local của platform dùng làm hướng đẩy")]
+        public Axis pushAxis = Axis.Forward;
+
+        [Tooltip("Đảo ngược hướng đẩy (ví dụ: -forward, -right...)")]
+        public bool invert = false;
+
+        [Tooltip("Tốc độ đẩy player (m/s)")]
         public float speed = 3f;
 
-        // Vận tốc cộng thêm cho player mỗi FixedUpdate.
-        public Vector3 ConveyorVelocity => transform.forward * speed;
-
+        public Vector3 ConveyorVelocity
+        {
+            get
+            {
+                Vector3 dir = pushAxis switch
+                {
+                    Axis.Forward => transform.forward,
+                    Axis.Right => transform.right,
+                    Axis.Up => transform.up,
+                    _ => transform.forward
+                };
+                if (invert) dir = -dir;
+                return dir * speed;
+            }
+        }
 
         private void OnCollisionStay(Collision collision)
         {
-            if(collision.transform == PlayerController.instance.transform)
+            if (collision.transform == PlayerController.instance.transform)
             {
-                PlayerController.instance.movement.SetExtendVelocity(new Vector3(ConveyorVelocity.x, 0, ConveyorVelocity.z));
+                PlayerController.instance.movement.SetExtendVelocity(
+                    new Vector3(ConveyorVelocity.x, 0, ConveyorVelocity.z));
             }
         }
+
         private void OnCollisionExit(Collision collision)
         {
             if (collision.transform == PlayerController.instance.transform)
@@ -36,7 +63,8 @@ namespace Raccoon.Player
             // Vẽ mũi tên hướng đẩy trong Scene view cho dễ setup
             Gizmos.color = Color.cyan;
             Vector3 origin = transform.position + Vector3.up * 0.1f;
-            Vector3 dir = transform.forward * Mathf.Max(1f, speed);
+            Vector3 dir = ConveyorVelocity.normalized * Mathf.Max(1f, speed);
+            if (invert) dir = -dir;
             Gizmos.DrawLine(origin, origin + dir);
             Gizmos.DrawSphere(origin + dir, 0.1f);
         }

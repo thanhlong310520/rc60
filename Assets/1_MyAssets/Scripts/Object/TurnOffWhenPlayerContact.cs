@@ -20,7 +20,11 @@ public class TurnOffWhenPlayerContact : MonoBehaviour
         playerContact = false;
         isTurnOff = false;
     }
-
+    private void Reset()
+    {
+        rend = GetComponent<Renderer>();
+        colli = GetComponent<Collider>();
+    }
     private void Update()
     {
         if (playerContact)
