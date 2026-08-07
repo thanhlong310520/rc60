@@ -80,7 +80,7 @@ public class TurnOffWhenPlayerContact : MonoBehaviour
         currentTimeToTurnOff = 0f;
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform == PlayerController.instance.transform)
         {
@@ -89,12 +89,12 @@ public class TurnOffWhenPlayerContact : MonoBehaviour
 
         }
     }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.transform == PlayerController.instance.transform)
-        {
-            playerContact = false;
-            ResetTime();
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.transform == PlayerController.instance.transform)
+    //    {
+    //        playerContact = false;
+    //        ResetTime();
+    //    }
+    //}
 }
