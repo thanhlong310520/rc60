@@ -63,9 +63,9 @@ namespace Raccoon.Player
 
         private void OnDisable()
         {
-            playerMovement.jumpAction.RemoveListener(OnJumpStart);
-            playerMovement.actionAnimMove.RemoveListener(OnAnimMove);
-            playerMovement.climbAction.RemoveListener(UpdateSpeedClimb);
+            //playerMovement.jumpAction.RemoveListener(OnJumpStart);
+            //playerMovement.actionAnimMove.RemoveListener(OnAnimMove);
+            //playerMovement.climbAction.RemoveListener(UpdateSpeedClimb);
         }
         private void Update()
         {

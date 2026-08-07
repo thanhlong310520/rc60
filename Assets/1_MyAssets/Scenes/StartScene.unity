@@ -399,9 +399,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Raccoon.GameData
   mapDataList:
+  - {fileID: 11400000, guid: d019a8fbe2cbd294e85171ebaea66830, type: 2}
   - {fileID: 11400000, guid: e4301020963b97d49829658e0ac21c76, type: 2}
   - {fileID: 11400000, guid: 339bdfcc3dabb3e47bc24a945feb1db9, type: 2}
   - {fileID: 11400000, guid: 99530c64cab22fe48a9774dbb650ffc0, type: 2}
+  - {fileID: 11400000, guid: 6179c666c2f4673489eea907098fcb3d, type: 2}
+  - {fileID: 11400000, guid: 289c63040b0b9e1438e4ec5cc70ef00b, type: 2}
+  - {fileID: 11400000, guid: 5fb7247afd063ea4ebea16744c18bad8, type: 2}
+  - {fileID: 11400000, guid: f26cad0c1292b8f49ab6728437b95a34, type: 2}
+  - {fileID: 11400000, guid: 09c51e0a12e4a5c48ac8e457dd55625d, type: 2}
   listSkinSO:
   - {fileID: 11400000, guid: de348fb4352929f48bec3b41c3d558fe, type: 2}
   - {fileID: 11400000, guid: 2293927bf9553f847ae3a11cfa11ae86, type: 2}

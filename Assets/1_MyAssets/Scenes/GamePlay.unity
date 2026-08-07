@@ -1141,7 +1141,6 @@ MonoBehaviour:
   holderMap: {fileID: 323485684}
   inputUI: {fileID: 1805493114}
   mainUiControl: {fileID: 403005563}
-  winSequenceController: {fileID: 134769319}
   currentMapId: 
   player: {fileID: 1000431732}
 --- !u!4 &584386464
@@ -1621,7 +1620,7 @@ MonoBehaviour:
   capsuleRadius: 1
   ladderLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   rayDistance: 0.4
   chestHeight: 1
   overHeadHeight: 1.5
