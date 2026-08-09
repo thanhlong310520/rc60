@@ -50,6 +50,7 @@ namespace Raccoon.Environment
 
             rb.position = waypoints[0].position;
             currentIndex = 0;
+            waitTimer = 0;
         }
 
         private void FixedUpdate()
@@ -83,6 +84,7 @@ namespace Raccoon.Environment
 
                 case LoopMode.Loop:
                     currentIndex = (currentIndex + 1) % waypoints.Length;
+                    if(currentIndex == 0) rb.position = waypoints[0].position;
                     break;
 
                 case LoopMode.Once:
