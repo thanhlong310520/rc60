@@ -14,6 +14,9 @@ public class Checkpoint : MonoBehaviour
     public bool isEndPoint; // true nếu là điểm cuối (win game)
     public Transform pointPlayerStay;
 
+    public MeshRenderer meshRenderer;
+    public Material matRed;
+    public Material matGreen;
     public MapController mapController;
 
 
@@ -33,6 +36,15 @@ public class Checkpoint : MonoBehaviour
         if (other.transform == PlayerController.instance.transform)
         {
             mapController.OnPlayerHitCheckpoint(this);
+            Saved(true);
+        }
+    }
+
+    public void Saved(bool isSaved)
+    {
+        if(meshRenderer != null)
+        {
+            meshRenderer.material = isSaved ? matGreen : matRed;
         }
     }
 }
