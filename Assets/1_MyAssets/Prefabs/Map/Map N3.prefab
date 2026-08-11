@@ -1089,7 +1089,7 @@ MonoBehaviour:
   - {fileID: 2317004466538840539}
   - {fileID: 5761890123507894271}
   - {fileID: 3436522918996572590}
-  startPoint: {fileID: 0}
+  startPoint: {fileID: 7226172002170911214}
   introCameraController: {fileID: 7331374978025175856}
 --- !u!1 &6330875996052004585
 GameObject:
@@ -3993,6 +3993,11 @@ PrefabInstance:
 --- !u!4 &3628866707352337387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1900878889029451001, guid: 47f17bdf780e6334fba962b35ddf319a, type: 3}
+  m_PrefabInstance: {fileID: 2899496051903399698}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7226172002170911214 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5509469605256281852, guid: 47f17bdf780e6334fba962b35ddf319a, type: 3}
   m_PrefabInstance: {fileID: 2899496051903399698}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3012083630845788960
