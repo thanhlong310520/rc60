@@ -175,6 +175,9 @@ namespace Raccoon
 
             DataMap dt = PlayerData.Get.GetDataMap(idMap);
             dt.Reset();
+
+            print("[GameData] reset map " + idMap + " done");
+            print("[GameData] list checkpoint " + dt.listCheckPoint.Count); 
         }
 
         public DataMap GetDataMap(string idMap)
@@ -198,7 +201,6 @@ namespace Raccoon
             else index++;
             if (index >= mapDataList.Count) index = 0;
 
-            PlayerData.Get.SetCurrentMap(mapDataList[index].mapId);
             SetCurrentMap(mapDataList[index]);
         }
 

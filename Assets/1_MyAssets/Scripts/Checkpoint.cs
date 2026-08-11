@@ -36,7 +36,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.transform == PlayerController.instance.transform)
         {
-            mapController.OnPlayerHitCheckpoint(this);
+            mapController?.OnPlayerHitCheckpoint(this);
             Saved(true);
         }
     }

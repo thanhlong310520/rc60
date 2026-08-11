@@ -158,8 +158,8 @@ namespace Raccoon.Controller
 
         public void SetWin(Vector3 dirCheckpoint)
         {
-            transform.rotation = Quaternion.LookRotation(dirCheckpoint);
-            SetState(EPlayerState.Win);
+            //transform.rotation = Quaternion.LookRotation(dirCheckpoint);
+            //SetState(EPlayerState.Win);
         }
         
     }
