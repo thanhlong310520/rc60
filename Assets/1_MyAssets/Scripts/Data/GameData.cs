@@ -182,6 +182,10 @@ namespace Raccoon
             return PlayerData.Get.GetDataMap(idMap);
         }
 
+        public bool GetIsCheckpointSaved(string idMap, string idCheckpoint)
+        {
+            return PlayerData.Get.GetIsCheckpointSaved(idMap, idCheckpoint);
+        }
         public bool GetWinMap(string idMap)
         {
             var dataMap = PlayerData.Get.GetDataMap(idMap);

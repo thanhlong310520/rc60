@@ -252,6 +252,16 @@ namespace Raccoon
             return false;
         }
 
+        public bool GetIsCheckpointSaved(string idMap, string idCheckPoint)
+        {
+            DataMap dM = GetDataMap(idMap);
+            if (dM != null)
+            {
+                return dM.listCheckPoint.Contains(idCheckPoint);
+            }
+            return false;
+        }
+
         public bool HaveActionTutDone(string action)
         {
             return actionTutDone.Contains(action);

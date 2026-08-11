@@ -1,3 +1,4 @@
+using Raccoon;
 using Raccoon.Controller;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,10 @@ public class MapController : MonoBehaviour
     {
         foreach (var c in checkpoints)
         {
-            c.Init(this);
+            bool isSave = GameData.Get.GetIsCheckpointSaved(GameData.Get.currentMap.mapId, c.id);
+
+            //print("[MapController] Init checkpoint: " + c.id + " isSave: " + isSave);   
+            c.Init(this, isSave);
         }
         if (showIntro)
         {

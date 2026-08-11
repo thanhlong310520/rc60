@@ -27,9 +27,10 @@ public class Checkpoint : MonoBehaviour
         return transform;
     }
 
-    public void Init(MapController mapController)
+    public void Init(MapController mapController, bool isSaved)
     {
         this.mapController = mapController;
+        Saved(isSaved);
     }
     private void OnTriggerEnter(Collider other)
     {
