@@ -121,7 +121,7 @@ public class IntroCameraController : MonoBehaviour
 
         Vector3 startEuler = cam.eulerAngles; // giữ nguyên pitch (x) và roll (z), chỉ xoay yaw (y)
         float startYaw = startEuler.y;
-        float totalYaw = orbitCount * 360f; // số vòng * 360 độ
+        float totalYaw = orbitCount * 360f / orbitCount; // số vòng * 360 độ
 
         t = 0f;
         while (t < orbitDuration)

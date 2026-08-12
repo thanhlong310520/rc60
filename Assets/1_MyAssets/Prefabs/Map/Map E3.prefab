@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroCameraController
   cam: {fileID: 991560463504169234}
-  endPoint: {fileID: 0}
+  endPoint: {fileID: 3018295133239206146}
   offsetEndPoint: {x: 0, y: 2, z: 5}
   player: {fileID: 0}
   offsetPlayer: {x: 0, y: 2, z: 4}

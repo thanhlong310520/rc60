@@ -23,6 +23,8 @@ public class PopupSkin : PopupCanvas
     public Transform content;
     protected ItemSkin currentItem;
 
+
+
     private void Start()
     {
         foreach (var t in listButtonTab)
@@ -35,6 +37,7 @@ public class PopupSkin : PopupCanvas
 
     public override void Show(PopupType p, UnityAction afterPopup, object obj)
     {
+        HomeSceneUI.instance.uiPreview.SetActive(false);
         base.Show(p, afterPopup, obj);
         foreach (var t in listButtonTab)
         {
@@ -45,6 +48,12 @@ public class PopupSkin : PopupCanvas
         if (dicDataItem == null) InitDic();
         if (listItem == null) listItem = new List<ItemSkin>();
         ShowItem();
+    }
+    public override void Hide()
+    {
+        HomeSceneUI.instance.uiPreview.SetActive(true);
+
+        base.Hide();
     }
     void InitDic()
     {
@@ -118,6 +127,7 @@ public class PopupSkin : PopupCanvas
         currentItem?.SetSelected(true);
 
         GameData.Get.ChangeSkin(item.data);
+        HomeSceneUI.instance.previewCharacter.SetCharacter(item.data);
     }
     private void ClickTap(TabTypeSkinUI uI)
     {

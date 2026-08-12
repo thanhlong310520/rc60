@@ -1,4 +1,5 @@
 using Raccoon;
+using Raccoon.Controller;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +7,29 @@ using UnityEngine.Events;
 
 public class HomeSceneUI : MonoBehaviour
 {
+    #region singleton
+    public static HomeSceneUI instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
     public List<PopupCanvas> listPopups;
+
+    public PreviewCharacter previewCharacter;
+    public GameObject uiPreview;
+    private void Start()
+    {
+        uiPreview.SetActive(true);
+    }
     public void OnClickPlay()
     {
         ShowPopup(PopupCanvas.PopupType.Play);

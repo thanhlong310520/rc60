@@ -202,6 +202,12 @@ namespace Raccoon
             if (index >= mapDataList.Count) index = 0;
 
             SetCurrentMap(mapDataList[index]);
+
+            var dataMap = GetDataMap(currentMap.mapId);
+            if (dataMap.won)
+            {
+                ResetMap(dataMap.map_id);
+            }
         }
 
         #endregion
