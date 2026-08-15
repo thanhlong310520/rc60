@@ -102,6 +102,18 @@ namespace Raccoon
                 source.Pause();
             }
         }
+        public void UnPauseMusic(string channel)
+        {
+            if (string.IsNullOrEmpty(channel))
+                return;
+
+            AudioSource source = GetMusicChannel(channel);
+
+            if (source != null)
+            {
+                source.UnPause();
+            }
+        }
 
         public void StopMusic(string channel)
         {

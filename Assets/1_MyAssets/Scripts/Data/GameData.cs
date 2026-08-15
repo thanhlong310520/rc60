@@ -49,8 +49,7 @@ namespace Raccoon
         private void Start()
         {
             isShowVip = false;
-            //if (PlayerData.Get.onMusic) PlayBgMusic();
-            //ObserverEventManager.Instance.Subscribe<SoundType>(EventObserverName.PlaySfx.ToString(),PlaySFX);
+            ObserverEventManager.Instance.Subscribe<SoundType>(EventObserverName.PlaySfx.ToString(),PlaySFX);
             CheckSubscribe();
             GetCurrentMap();
             currentSkinSOs = GetListCurrentSkinUserUse();

@@ -170,6 +170,16 @@ public class GamePlayController : MonoBehaviour
         PlayerController.instance.SetWin(dirCheckpoint);
     }
     #region UI
+
+    public void ShowPopup(PopupCanvas.PopupType type)
+    {
+        if (CheckCanShowPopup())
+        {
+            MainUiControl.instance.ShowPopup(type, HidePopup, null);
+            SetCanAction(false);
+        }
+
+    }
     public void ShowPopup(PopupCanvas.PopupType type, CharacterData data = null)
     {
         if (CheckCanShowPopup())

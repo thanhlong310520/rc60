@@ -77,6 +77,11 @@ public class MainUiControl : MonoBehaviour
         return false;
     }
 
+    public void ClickButtonBackToHome()
+    {
+        SceneLoader.Instance.LoadScene("Home");
+    }
+
     //public void WarringSteal()
     //{
     //    uiWarning.StartWarning();
