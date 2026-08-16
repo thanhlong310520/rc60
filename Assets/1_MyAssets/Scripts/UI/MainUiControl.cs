@@ -1,3 +1,4 @@
+using Raccoon;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -79,7 +80,7 @@ public class MainUiControl : MonoBehaviour
 
     public void ClickButtonBackToHome()
     {
-        SceneLoader.Instance.LoadScene("Home");
+        GameData.Get.BackToHome();
     }
 
     //public void WarringSteal()

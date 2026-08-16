@@ -191,7 +191,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281222767}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -243,7 +243,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -481,7 +481,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: effee22abe904cb4aa4c6e8b1119fd16, type: 2}
   - {fileID: 11400000, guid: 15573057b1795bc42afa0d8fed7d8e54, type: 2}
   audioBg: []
-  listSoundFX: []
+  listSoundFX:
+  - type: 1
+    clip: {fileID: 8300000, guid: aebfe4c62b254a648a8d019dece928a4, type: 3}
+    vol: 0.3
+  - type: 2
+    clip: {fileID: 8300000, guid: 7b5f84ad7a481934186cb51158b97db9, type: 3}
+    vol: 0.7
   isShowVip: 0
   currentMap: {fileID: 0}
   currentSkinSOs: []

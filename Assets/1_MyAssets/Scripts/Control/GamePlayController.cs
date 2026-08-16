@@ -85,6 +85,7 @@ public class GamePlayController : MonoBehaviour
         inputUI.SetActive(true);
         mainUiControl.gameObject.SetActive(true);
         CameraController.instance.gameObject.SetActive(true);
+        GameData.Get.PlayBgMusic(SoundType.InGame);
         player.Init();
     }
 
@@ -154,6 +155,7 @@ public class GamePlayController : MonoBehaviour
     { 
         GameData.Get.SetWinMap(currentMapId);
         GameData.Get.NextMap();
+        GameData.Get.StopBgMusic(SoundType.InGame);
         SceneLoader.Instance.LoadScene("GamePlay");
 
     }

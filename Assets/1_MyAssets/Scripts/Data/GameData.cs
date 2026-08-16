@@ -24,8 +24,6 @@ namespace Raccoon
         public List<AudioClip> audioBg;
         [SerializeField] List<SoundData> listSoundFX;
 
-        static string bgId = "BGmusic";
-
 
         public static float scaleAds;
         public static long refreshTimeAds;
@@ -224,18 +222,21 @@ namespace Raccoon
             PlayerData.Get.onMusic = !PlayerData.Get.onMusic;
             actionChange?.Invoke(PlayerData.Get.onMusic);
 
-            if (PlayerData.Get.onMusic) PlayBgMusic();
-            else PauseBgMusic();
         }
 
-        void PlayBgMusic()
+        public void PlayBgMusic(SoundType type)
         {
-            AudioClip clip = GetClipBgMusic();
-            GameAudio.Get.PlayMusic(bgId, clip);
+            AudioClip clip = GetClipBySoundType(type);
+            float vol = GetVolBySoundType(type);
+            GameAudio.Get.PlayMusic(type.ToString(), clip, vol);
         }
-        void PauseBgMusic()
+        public void PauseBgMusic(SoundType type)
         {
-            GameAudio.Get.PauseMusic(bgId);
+            GameAudio.Get.PauseMusic(type.ToString());
+        }
+        public void StopBgMusic(SoundType type)
+        {
+            GameAudio.Get.StopMusic(type.ToString());
         }
 
         public void StopSound()
@@ -277,11 +278,6 @@ namespace Raccoon
             var sd = listSoundFX.FirstOrDefault(e => e.type == type);
 
             return sd.vol;
-        }
-        AudioClip GetClipBgMusic()
-        {
-            int index = UnityEngine.Random.Range(0, audioBg.Count);
-            return audioBg[index];
         }
         #endregion
 
@@ -345,6 +341,13 @@ namespace Raccoon
         {
             return listUICurrency.FirstOrDefault(ui => ui.type == type).bgDailyReward;
         }
+
+
+        public void BackToHome()
+        {
+            SceneLoader.Instance.LoadScene("Home");
+            StopBgMusic(SoundType.InGame);
+        }
     }
 
     [Serializable] struct SoundData
@@ -364,7 +367,6 @@ namespace Raccoon
 
     public enum SoundType 
     {
-        Button, ContactSlot, CollectCoin, ContactWave, BaseBatAttack, SaveLoot, UpgradeSuccess, LootItem, FootStep, ChangeMap, 
-        Jump, MapSound, Steal, BuyFall, Shield, ChangeMap1,
+        Button, InGame, Jump, FootStep
     }
 }
