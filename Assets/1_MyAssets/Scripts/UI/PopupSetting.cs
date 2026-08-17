@@ -4,6 +4,8 @@ using UnityEngine.Events;
 
 public class PopupSetting : PopupCanvas
 {
+
+    public SoundType SoundType;
     [SerializeField] ButtonState sound;
     [SerializeField] ButtonState music;
 
@@ -19,7 +21,7 @@ public class PopupSetting : PopupCanvas
     }
     public void OnClickButtonMusic()
     {
-        GameData.Get.ChangeOnMusic(music.SetSelect);
+        GameData.Get.ChangeOnMusic(SoundType, music.SetSelect);
     }
 }
 [System.Serializable]

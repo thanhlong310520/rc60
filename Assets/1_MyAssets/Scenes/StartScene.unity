@@ -191,7 +191,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281222767}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -243,7 +243,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -487,6 +487,24 @@ MonoBehaviour:
     vol: 0.3
   - type: 2
     clip: {fileID: 8300000, guid: 7b5f84ad7a481934186cb51158b97db9, type: 3}
+    vol: 0.7
+  - type: 5
+    clip: {fileID: 8300000, guid: c92107f7618af10438836660e591c0fa, type: 3}
+    vol: 0.7
+  - type: 0
+    clip: {fileID: 8300000, guid: 8e30a022680668540b16f910983a5b69, type: 3}
+    vol: 0.7
+  - type: 3
+    clip: {fileID: 8300000, guid: dac588620eafdea458959f9f557f5a5a, type: 3}
+    vol: 0.7
+  - type: 6
+    clip: {fileID: 8300000, guid: 19f1b528fb8e53b4d8523888b3da0d90, type: 3}
+    vol: 0.7
+  - type: 7
+    clip: {fileID: 8300000, guid: d301e2d0ce48a8547b59d48d0251fb52, type: 3}
+    vol: 0.7
+  - type: 4
+    clip: {fileID: 8300000, guid: aebfe4c62b254a648a8d019dece928a4, type: 3}
     vol: 0.7
   isShowVip: 0
   currentMap: {fileID: 0}

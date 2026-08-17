@@ -1,7 +1,9 @@
 using Raccoon;
 using Raccoon.Controller;
+using Raccoon.Utils;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,9 +28,14 @@ public class HomeSceneUI : MonoBehaviour
 
     public PreviewCharacter previewCharacter;
     public GameObject uiPreview;
+
+    public TMP_Text textCoin;  
+    public TMP_Text textDiamond;
     private void Start()
     {
         uiPreview.SetActive(true);
+        ShowCoin();
+        ShowDiamond();
     }
     public void OnClickPlay()
     {
@@ -56,4 +63,13 @@ public class HomeSceneUI : MonoBehaviour
         SceneLoader.Instance.LoadScene("GamePlay");
     }
 
+    public void ShowCoin()
+    {
+        textCoin.text = PlayerData.Get.GetCharacterData().coin.ConvertCurrencyToString();
+    }
+
+    public void ShowDiamond()
+    {
+        textDiamond.text = PlayerData.Get.GetCharacterData().diamond.ConvertCurrencyToString();
+    }
 }

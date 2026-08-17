@@ -217,15 +217,24 @@ namespace Raccoon
 
             if (!PlayerData.Get.onSound) StopSound();
         }
-        public void ChangeOnMusic(UnityAction<bool> actionChange)
+        public void ChangeOnMusic(SoundType type, UnityAction<bool> actionChange)
         {
             PlayerData.Get.onMusic = !PlayerData.Get.onMusic;
             actionChange?.Invoke(PlayerData.Get.onMusic);
-
+            if (!PlayerData.Get.onMusic)
+            {
+                StopBgMusic(type);
+            }
+            else
+            {
+                PlayBgMusic(type);
+            }
         }
 
         public void PlayBgMusic(SoundType type)
         {
+            if(!PlayerData.Get.onMusic) return;
+
             AudioClip clip = GetClipBySoundType(type);
             float vol = GetVolBySoundType(type);
             GameAudio.Get.PlayMusic(type.ToString(), clip, vol);
@@ -367,6 +376,6 @@ namespace Raccoon
 
     public enum SoundType 
     {
-        Button, InGame, Jump, FootStep
+        Button, InGame, Jump, FootStep, HomeSceneBG, SaveCheckpoint, NextMap, ContactCoin,
     }
 }

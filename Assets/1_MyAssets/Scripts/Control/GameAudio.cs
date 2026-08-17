@@ -125,6 +125,14 @@ namespace Raccoon
                 source.Stop();
             }
         }
+        public void StopAllMusic()
+        {
+            foreach (var source in channels_music.Values)
+            {
+                if (source != null)
+                    source.Stop();
+            }
+        }
 
         public void StopSoundFX(string channel)
         {
@@ -214,16 +222,8 @@ namespace Raccoon
 
         public void StopAllSound()
         {
-            foreach (var source in channels_music.Values)
-            {
-                if (source != null)
-                    source.Stop();
-            }
-            foreach (var source in channels_sfx.Values)
-            {
-                if (source != null)
-                    source.Stop();
-            }
+            StopAllMusic();
+            StopAllSoundFX();
         }
         public void StopAllSoundFX()
         {

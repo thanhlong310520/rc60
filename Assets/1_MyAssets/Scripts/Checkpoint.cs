@@ -19,6 +19,8 @@ public class Checkpoint : MonoBehaviour
     public Material matGreen;
     public MapController mapController;
 
+    public GameObject coin;
+
 
     public Transform GetPointPlayerStay()
     {
@@ -31,6 +33,10 @@ public class Checkpoint : MonoBehaviour
     {
         this.mapController = mapController;
         Saved(isSaved);
+        if(coin != null)
+        {
+            coin.SetActive(!isSaved);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

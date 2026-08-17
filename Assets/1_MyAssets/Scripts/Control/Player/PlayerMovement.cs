@@ -24,7 +24,7 @@ namespace Raccoon.Player
         public bool isGrounded;
         public LayerMask layerCheckGround;
         [FormerlySerializedAs("m_GravityMultiplier")]
-        [Range(1f, 4f)] public float gravityMultiplier = 2f;
+        [Range(1f, 8f)] public float gravityMultiplier = 2f;
 
         [FormerlySerializedAs("m_GroundCheckDistance")]
         public float groundCheckDistance = 0.1f;

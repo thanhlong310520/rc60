@@ -11,6 +11,7 @@ public class CharacterData
     public string id;
     public string name;
     public long coin;
+    public long diamond;
     public string lastTimeClaimReward;
     public int dayReward;
 
@@ -21,12 +22,16 @@ public class CharacterData
     [NonSerialized]
     [IgnoreMember]
     public Action<long> onChangeCoin;
+    [NonSerialized]
+    [IgnoreMember]
+    public Action<long> onChangeDiamond;
 
     public CharacterData(string id, string name)
     {
         this.id = id;
         this.name = name;
         coin = 0;
+        diamond = 0;
         lastTimeClaimReward = "";
         dayReward = 0;
         dicCurrentSkin = new Dictionary<TypeSkin, string>();
@@ -40,6 +45,12 @@ public class CharacterData
     {
         coin += add;
         onChangeCoin?.Invoke(coin);
+    }
+
+    public void AddDiamond(long add)
+    {
+        diamond += add;
+        onChangeDiamond?.Invoke(diamond);
     }
 
     public string GetIdCurrentSkin(TypeSkin type)

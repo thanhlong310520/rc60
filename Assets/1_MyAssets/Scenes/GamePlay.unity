@@ -925,6 +925,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -977,7 +978,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
@@ -1029,7 +1030,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1307,6 +1308,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1428717002}
     m_Modifications:
+    - target: {fileID: 1957851302387665267, guid: c2a1d2472fac3ea41afbd1f61ddf501a, type: 3}
+      propertyPath: SoundType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8358533029920340538, guid: c2a1d2472fac3ea41afbd1f61ddf501a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1931,6 +1936,7 @@ MonoBehaviour:
     id: 
     name: 
     coin: 0
+    diamond: 0
     lastTimeClaimReward: 
     dayReward: 0
 --- !u!114 &1000431733
@@ -1955,7 +1961,7 @@ MonoBehaviour:
   layerCheckGround:
     serializedVersion: 2
     m_Bits: 64
-  gravityMultiplier: 4
+  gravityMultiplier: 6
   groundCheckDistance: 0.1
   maxSlopeAngle: 55
   groundCheckRadiusMultiplier: 0.9

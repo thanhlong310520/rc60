@@ -161,6 +161,12 @@ namespace Raccoon.Controller
             //transform.rotation = Quaternion.LookRotation(dirCheckpoint);
             //SetState(EPlayerState.Win);
         }
+
+
+        public void OnContactCoin()
+        {
+            ObserverEventManager.Instance.Publish<SoundType>(EventObserverName.PlaySfx.ToString(), SoundType.ContactCoin);
+        }
         
     }
 

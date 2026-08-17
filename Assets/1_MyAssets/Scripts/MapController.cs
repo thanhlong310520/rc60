@@ -114,7 +114,9 @@ public class MapController : MonoBehaviour
         // TODO: thay bằng hệ thống save thật của bạn (JSON, PlayerPrefs, SaveManager,...)
         if (GamePlayController.instance.SaveCheckPoint(checkpoint.id))
         {
-                Debug.Log($"[MapController] Đã lưu checkpoint: {checkpoint.id}");
+            Debug.Log($"[MapController] Đã lưu checkpoint: {checkpoint.id}");
+
+            ObserverEventManager.Instance.Publish<SoundType>(EventObserverName.PlaySfx.ToString(), SoundType.SaveCheckpoint);
             if (checkpoint.isEndPoint)
             {
                 WinGame(checkpoint);
