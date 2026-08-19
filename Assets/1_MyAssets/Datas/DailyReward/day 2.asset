@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: day 2
   m_EditorClassIdentifier: Assembly-CSharp::SoDailyReward
   day: 2
+  income: 20
   icon: {fileID: 724257816, guid: cbac84c4bbe039b4bbdcb663d4d7a0f4, type: 3}
   type: 0

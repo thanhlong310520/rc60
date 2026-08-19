@@ -1,3 +1,4 @@
+using Raccoon.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,12 +13,14 @@ public class ItemDailyReward : MonoBehaviour
     public Image bg;
     public Image icon;
     public TMP_Text textDay;
+    public TMP_Text textIncome;
     public void Init(SoDailyReward data, Sprite spriteBG)
     {
         this.data = data;
         bg.sprite = spriteBG;
         icon.sprite = data.icon;
         textDay.text = "DAY " + data.day;
+        textIncome.text = data.income.ConvertCurrencyToString();
     }
 
     public void OnClick()

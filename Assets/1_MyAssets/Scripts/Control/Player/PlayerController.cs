@@ -125,6 +125,7 @@ namespace Raccoon.Controller
                 rb.position = startPoint.position;
                 rb.rotation = startPoint.rotation;
             }
+            VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.Spawn, startPoint.position + Vector3.up *(-1f));
 
         }
 
@@ -140,6 +141,8 @@ namespace Raccoon.Controller
             GamePlayController.instance.ShowPopup(PopupCanvas.PopupType.Dead, data);
             movement.SetCanMove(false);
             SetState(EPlayerState.Dead);
+            VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.Dead, transform.position + Vector3.up);
+
         }
 
         public void ResetPlayer()
@@ -166,6 +169,7 @@ namespace Raccoon.Controller
         public void OnContactCoin()
         {
             ObserverEventManager.Instance.Publish<SoundType>(EventObserverName.PlaySfx.ToString(), SoundType.ContactCoin);
+            PlayerData.Get.GetCharacterData().AddCoin(1);
         }
         
     }

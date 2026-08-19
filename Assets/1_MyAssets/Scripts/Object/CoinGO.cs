@@ -7,6 +7,7 @@ public class CoinGO : MonoBehaviour
     {
         if (other.transform == PlayerController.instance.transform)
         {
+            VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.Coin, transform.position + Vector3.up * 1.25f);
             PlayerController.instance.OnContactCoin();
             gameObject.SetActive(false);
         }

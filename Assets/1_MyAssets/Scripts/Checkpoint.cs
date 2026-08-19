@@ -1,4 +1,6 @@
 using Raccoon.Controller;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -21,6 +23,8 @@ public class Checkpoint : MonoBehaviour
 
     public GameObject coin;
 
+    public float timeAlive = 2f;    
+    public List<GameObject> listVfxOnHit;
 
     public Transform GetPointPlayerStay()
     {
@@ -47,6 +51,25 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
+    public void PlayVfx(bool turnOff)
+    {
+        StartCoroutine(PlayVfxCoroutine(turnOff));
+    }
+    IEnumerator PlayVfxCoroutine(bool turnOff)
+    {
+        foreach (var vfx in listVfxOnHit)
+        {
+            vfx.SetActive(true);
+        }
+        yield return new WaitForSeconds(timeAlive);
+        if (turnOff)
+        {
+            foreach (var vfx in listVfxOnHit)
+            {
+                vfx.SetActive(false);
+            }
+        }
+    }
     public void Saved(bool isSaved)
     {
         if(meshRenderer != null)

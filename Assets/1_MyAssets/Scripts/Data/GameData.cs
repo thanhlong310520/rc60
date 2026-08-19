@@ -1,4 +1,5 @@
 using Raccoon.EnumHolder;
+using Raccoon.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,36 +57,36 @@ namespace Raccoon
 
         public void CheckSubscribe()
         {
-            //foreach (var sub in GameStoreController.Get.lstProduct)
-            //{
-            //    //if (sub.productType != UnityEngine.Purchasing.ProductType.Subscription) continue;
-            //    GameStoreController.Get.CheckRestoreProductById(sub.id, (restore, id) =>
-            //    {
-            //        if (restore)
-            //        {
-            //            sub.OnSendCheckButton(true);
-            //            if (sub.has_noads)
-            //            {
-            //                PlayerData.Get.RemoveAds();
-            //            }
-            //            if (sub.vip)
-            //            {
-            //                PlayerData.Get.OnVip();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (sub.has_noads)
-            //            {
-            //                PlayerData.Get.OnAds();
-            //            }
-            //            if (sub.vip)
-            //            {
-            //                PlayerData.Get.RemoveVip();
-            //            }
-            //        }
-            //    });
-            //}
+            foreach (var sub in GameStoreController.Get.lstProduct)
+            {
+                if (sub.productType != UnityEngine.Purchasing.ProductType.Subscription) continue;
+                GameStoreController.Get.CheckRestoreProductById(sub.id, (restore, id) =>
+                {
+                    if (restore)
+                    {
+                        sub.OnSendCheckButton(true);
+                        if (sub.has_noads)
+                        {
+                            PlayerData.Get.RemoveAds();
+                        }
+                        if (sub.vip)
+                        {
+                            PlayerData.Get.OnVip();
+                        }
+                    }
+                    else
+                    {
+                        if (sub.has_noads)
+                        {
+                            PlayerData.Get.OnAds();
+                        }
+                        if (sub.vip)
+                        {
+                            PlayerData.Get.RemoveVip();
+                        }
+                    }
+                });
+            }
         }
 
         public CharacterData GetCharacterData()
@@ -124,7 +125,14 @@ namespace Raccoon
             {
                 if (so.day > day) day = so.day;
                 /// add
-
+                if (so.type == TypeCurrency.Gold)
+                {
+                    GetCharacterData().AddCoin(so.income);
+                }
+                else if(so.type == TypeCurrency.Gem)
+                {
+                    GetCharacterData().AddDiamond(so.income);
+                }
             }
             print("Day " + day);
             PlayerData.Get.GetCharacterData().SetDayReward(day);

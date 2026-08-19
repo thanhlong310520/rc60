@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoDailyReward : ScriptableObject
 {
     public int day;
+    public long income;
     public Sprite icon;
     public TypeCurrency type;
 }

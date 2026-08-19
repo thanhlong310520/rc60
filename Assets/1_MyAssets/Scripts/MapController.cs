@@ -115,12 +115,15 @@ public class MapController : MonoBehaviour
         if (GamePlayController.instance.SaveCheckPoint(checkpoint.id))
         {
             Debug.Log($"[MapController] Đã lưu checkpoint: {checkpoint.id}");
-
+            bool turnOff = true;
             ObserverEventManager.Instance.Publish<SoundType>(EventObserverName.PlaySfx.ToString(), SoundType.SaveCheckpoint);
             if (checkpoint.isEndPoint)
             {
                 WinGame(checkpoint);
+                turnOff = false;
             }
+
+            checkpoint.PlayVfx(turnOff);
         }
         else
         {

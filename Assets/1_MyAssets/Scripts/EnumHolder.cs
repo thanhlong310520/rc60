@@ -29,7 +29,7 @@ namespace Raccoon.EnumHolder
 
     public enum TypeVFX
     {
-        Blood, BackBase, Steal, SlotEmpty, Coin
+        InGround, Jump, Coin, Dead, Spawn,
     }
 
     public enum SoundType

@@ -171,6 +171,22 @@ public class GamePlayController : MonoBehaviour
         Debug.Log("[GamePlayController] Win");
         PlayerController.instance.SetWin(dirCheckpoint);
     }
+
+
+    public GameObject SpawnItem(GameObject prefab)
+    {
+        GameObject result = null;
+        //if (prefab != null) result = PoolByID.Instance.GetPrefab(prefab);
+        if (prefab != null) result = GamePool.Get(prefab);
+
+        return result;
+    }
+
+    public void RespawnItem(GameObject item)
+    {
+        //PoolByID.Instance.PushToPool(item);
+        GamePool.Release(item);
+    }
     #region UI
 
     public void ShowPopup(PopupCanvas.PopupType type)

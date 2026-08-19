@@ -34,9 +34,22 @@ public class HomeSceneUI : MonoBehaviour
     private void Start()
     {
         uiPreview.SetActive(true);
-        ShowCoin();
-        ShowDiamond();
+        ShowCoin(PlayerData.Get.GetCharacterData().coin);
+        ShowDiamond(PlayerData.Get.GetCharacterData().diamond);
     }
+
+    private void OnEnable()
+    {
+        GameData.Get.GetCharacterData().onChangeCoin += ShowCoin;
+        GameData.Get.GetCharacterData().onChangeDiamond += ShowDiamond;
+    }
+
+    private void OnDisable()
+    {
+        GameData.Get.GetCharacterData().onChangeCoin -= ShowCoin;
+        GameData.Get.GetCharacterData().onChangeDiamond -= ShowDiamond;
+    }
+
     public void OnClickPlay()
     {
         ShowPopup(PopupCanvas.PopupType.Play);
@@ -63,13 +76,13 @@ public class HomeSceneUI : MonoBehaviour
         SceneLoader.Instance.LoadScene("GamePlay");
     }
 
-    public void ShowCoin()
+    public void ShowCoin(long coin)
     {
-        textCoin.text = PlayerData.Get.GetCharacterData().coin.ConvertCurrencyToString();
+        textCoin.text = coin.ConvertCurrencyToString();
     }
 
-    public void ShowDiamond()
+    public void ShowDiamond(long diamond)
     {
-        textDiamond.text = PlayerData.Get.GetCharacterData().diamond.ConvertCurrencyToString();
+        textDiamond.text = diamond.ConvertCurrencyToString();
     }
 }
