@@ -16,5 +16,7 @@ MonoBehaviour:
   typeSkin: 3
   icon: {fileID: 0}
   prefab: {fileID: 2172290319036216811, guid: 334884299ffe9654e90532f888be180e, type: 3}
-  isAds: 0
+  typePay: 2
+  typeCurrency: 1
+  price: 5
   tagNew: 0

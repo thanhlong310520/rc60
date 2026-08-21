@@ -1,4 +1,7 @@
 
+using Raccoon;
+using Raccoon.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,6 +13,9 @@ public class ItemSkin : MonoBehaviour
     public GameObject tagNew;
     public GameObject adsGO;
     public GameObject equipGO;
+    public GameObject priceGO;
+    public Image iconPrice;
+    public TMP_Text priceTxt;
     public SoSkin data;
     UnityAction<ItemSkin> clickAciton;
 
@@ -20,11 +26,12 @@ public class ItemSkin : MonoBehaviour
     {
         clickAciton = aciton;
     }
-    public virtual void SetData(SoSkin data, bool isUnlock, bool isUse)
+    public virtual void SetData(SoSkin data, bool isUse)
     {
         this.data = data;
-        this.isUnlock = isUnlock;
         this.isUse = isUse;
+        iconPrice.sprite = GameData.Get.GetIconCurrencyByType(data.typeCurrency);
+        priceTxt.text = data.price.ConvertCurrencyToString();
         SetSelected(isUse);
         SetIcon(data);
         tagNew.SetActive(data.tagNew);
@@ -35,6 +42,12 @@ public class ItemSkin : MonoBehaviour
     }
     public virtual void SetSelected(bool selected)
     {
+        CharacterData cd = GameData.Get.GetCharacterData();
+        if (cd.IsOwnSkin(data.typeSkin, data.id))
+        {
+            isUnlock = true;
+        }
+
         this.selected.SetActive(selected);
         isUse = selected;
         SetUnlock();
@@ -46,12 +59,20 @@ public class ItemSkin : MonoBehaviour
         {
             equipGO.SetActive(false);
             adsGO.SetActive(false);
+            priceGO.SetActive(false);
         }
         else
         {
-            bool offAds = !isUnlock && data.isAds;
-            equipGO.SetActive(!offAds);
-            adsGO.SetActive(offAds);
+            if (isUnlock || data.typePay == Raccoon.EnumHolder.EShopType.None)
+            {
+                equipGO.SetActive(true); adsGO.SetActive(false); priceGO.SetActive(false);
+            }
+            else
+            {
+                equipGO.SetActive(false); adsGO.SetActive(false); priceGO.SetActive(false);
+                if (data.typePay == Raccoon.EnumHolder.EShopType.Ads) adsGO.SetActive(true);
+                if (data.typePay == Raccoon.EnumHolder.EShopType.Currencies) priceGO.SetActive(true);
+            }
         }
 
     }

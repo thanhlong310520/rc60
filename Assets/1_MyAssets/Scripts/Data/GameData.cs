@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using Raccoon.EnumHolder;
 using Raccoon.Store;
 using System;
@@ -20,7 +21,7 @@ namespace Raccoon
         [SerializeField] List<SoSkin> defaultSkin;
 
         public DailyRewardTimeChecker dailyRewardTimeChecker = new DailyRewardTimeChecker();
-
+        public CheckingInGame checkingame;
 
         public List<AudioClip> audioBg;
         [SerializeField] List<SoundData> listSoundFX;
@@ -57,6 +58,8 @@ namespace Raccoon
 
         public void CheckSubscribe()
         {
+            bool noAds = false;
+            bool vip = false;
             foreach (var sub in GameStoreController.Get.lstProduct)
             {
                 if (sub.productType != UnityEngine.Purchasing.ProductType.Subscription) continue;
@@ -67,26 +70,39 @@ namespace Raccoon
                         sub.OnSendCheckButton(true);
                         if (sub.has_noads)
                         {
-                            PlayerData.Get.RemoveAds();
+                            noAds = true;
+                            //PlayerData.Get.RemoveAds();
                         }
                         if (sub.vip)
                         {
-                            PlayerData.Get.OnVip();
+                            vip = true;
+                            //PlayerData.Get.OnVip();
                         }
                     }
-                    else
-                    {
-                        if (sub.has_noads)
-                        {
-                            PlayerData.Get.OnAds();
-                        }
-                        if (sub.vip)
-                        {
-                            PlayerData.Get.RemoveVip();
-                        }
-                    }
+                    //else
+                    //{
+                    //    if (sub.has_noads)
+                    //    {
+                    //        PlayerData.Get.OnAds();
+                    //    }
+                    //    if (sub.vip)
+                    //    {
+                    //        PlayerData.Get.RemoveVip();
+                    //    }
+                    //}
                 });
             }
+
+            if (noAds)
+                PlayerData.Get.RemoveAds();
+            else
+                PlayerData.Get.OnAds();
+            
+            if(vip)
+                PlayerData.Get.OnVip();
+            else
+                PlayerData.Get.RemoveVip();
+
         }
 
         public CharacterData GetCharacterData()
@@ -94,7 +110,7 @@ namespace Raccoon
             CharacterData result = PlayerData.Get.GetCharacterData();
             return result;
         }
-        public bool CanClaimReward()
+        public bool CanClaimRewardDaily()
         {
             string lastReward = PlayerData.Get.GetCharacterData().lastTimeClaimReward;
             if (string.IsNullOrEmpty(lastReward)) return true;
@@ -112,32 +128,62 @@ namespace Raccoon
             if (exDay < 0) exDay = 0;
             if (exDay >= listDailyRewardSO.Count)
             {
-                if(CanClaimReward()) exDay = 0;
+                if(CanClaimRewardDaily()) exDay = 0;
             }
             return exDay + 1;
         }
 
 
-        public void ClaimReward(List<SoDailyReward> listSO)
+        public void ClaimRewardDaily(List<SoDailyReward> listSO)
         {
             int day = 0;
             foreach (var so in listSO)
             {
                 if (so.day > day) day = so.day;
                 /// add
-                if (so.type == TypeCurrency.Gold)
-                {
-                    GetCharacterData().AddCoin(so.income);
-                }
-                else if(so.type == TypeCurrency.Gem)
-                {
-                    GetCharacterData().AddDiamond(so.income);
-                }
+                AddIncome(so.type, so.income);
             }
             print("Day " + day);
             PlayerData.Get.GetCharacterData().SetDayReward(day);
             string timeClaim = dailyRewardTimeChecker.ConvertTimeToString(DateTime.UtcNow);
             PlayerData.Get.GetCharacterData().SetLastTimeClaimReward(timeClaim);
+        }
+
+        public void AddIncome(TypeCurrency type, long value)
+        {
+            if (type == TypeCurrency.Gold)
+            {
+                GetCharacterData().AddCoin(value);
+            }
+            else if (type == TypeCurrency.Gem)
+            {
+                GetCharacterData().AddDiamond(value);
+            }
+        }
+
+        public void PayCurrency(TypeCurrency type, long value)
+        {
+            if (type == TypeCurrency.Gold)
+            {
+                GetCharacterData().AddCoin(-value);
+            }
+            else if (type == TypeCurrency.Gem)
+            {
+                GetCharacterData().AddDiamond(-value);
+            }
+        }
+
+        public long GetCurrency(TypeCurrency type)
+        {
+            if (type == TypeCurrency.Gold)
+            {
+                return GetCharacterData().coin;
+            }
+            if (type == TypeCurrency.Gem)
+            {
+                return GetCharacterData().diamond;
+            }
+            return 0;
         }
         #region Map
         void GetCurrentMap()
@@ -172,6 +218,17 @@ namespace Raccoon
         {
             DataMap dt = PlayerData.Get.GetDataMap(idMap);
             dt.WinMap();
+        }
+
+        public void SetInFinishLineMap(string idMap)
+        {
+            DataMap dt = PlayerData.Get.GetDataMap(idMap);
+            dt.SetInFinishLine();
+        }
+        public void SetClaimRewardWinMap(string idMap)
+        {
+            DataMap dt = PlayerData.Get.GetDataMap(idMap);
+            dt.ClaimRewardWin();
         }
 
         public void ResetMap(string idMap)
@@ -359,6 +416,11 @@ namespace Raccoon
             return listUICurrency.FirstOrDefault(ui => ui.type == type).bgDailyReward;
         }
 
+        public Sprite GetIconCurrencyByType(TypeCurrency type)
+        {
+            return listUICurrency.FirstOrDefault(ui => ui.type == type).iconCurrency;
+        }
+
 
         public void BackToHome()
         {
@@ -378,6 +440,7 @@ namespace Raccoon
     {
         public TypeCurrency type;
         public Sprite bgDailyReward;
+        public Sprite iconCurrency;
     }
 
 
@@ -385,5 +448,13 @@ namespace Raccoon
     public enum SoundType 
     {
         Button, InGame, Jump, FootStep, HomeSceneBG, SaveCheckpoint, NextMap, ContactCoin,
+    }
+
+    [System.Serializable]
+    public struct IncomeData
+    {
+        public TypeCurrency typeCurrency;
+        public Sprite icon;
+        public long amount;
     }
 }

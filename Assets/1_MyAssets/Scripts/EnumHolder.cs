@@ -47,4 +47,11 @@ namespace Raccoon.EnumHolder
     {
         Gold, Gem
     }
+    public enum EShopType
+    {
+        None,
+        Ads,
+        Currencies,
+        IAP,
+    }
 }

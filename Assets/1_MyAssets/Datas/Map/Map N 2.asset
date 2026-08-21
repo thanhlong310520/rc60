@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapData
   mapId: map n2
   avt: {fileID: 0}
+  rewardWin:
+  - typeCurrency: 1
+    icon: {fileID: 1157108876, guid: 79a0b8515194b5445b4cca46ff595e33, type: 3}
+    amount: 5
   mapPrefab: {fileID: 7259695983991768444, guid: 8a2d7dd33b50a8c418041f6deb631d77, type: 3}

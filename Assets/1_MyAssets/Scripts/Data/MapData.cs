@@ -1,4 +1,7 @@
 
+using Raccoon;
+using Raccoon.EnumHolder;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -10,5 +13,8 @@ public class MapData : ScriptableObject
 {
     public string mapId;
     public Sprite avt;
+    public List<IncomeData> rewardWin;
     public GameObject mapPrefab;
 }
+
+

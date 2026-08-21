@@ -473,8 +473,10 @@ MonoBehaviour:
   listUICurrency:
   - type: 0
     bgDailyReward: {fileID: 81242137, guid: 9fd3937c331f66342b2149e9a16cb2a5, type: 3}
+    iconCurrency: {fileID: 1132511455, guid: 208c5bcf03aa3bf4f945938c2e061731, type: 3}
   - type: 1
     bgDailyReward: {fileID: -1182100714, guid: 9fd3937c331f66342b2149e9a16cb2a5, type: 3}
+    iconCurrency: {fileID: -1240945681, guid: 208c5bcf03aa3bf4f945938c2e061731, type: 3}
   defaultSkin:
   - {fileID: 11400000, guid: af4ee87993ff4694c8f6482e23526e21, type: 2}
   - {fileID: 11400000, guid: 2ab778a41f840d74ab2499e806045c81, type: 2}
@@ -501,7 +503,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 19f1b528fb8e53b4d8523888b3da0d90, type: 3}
     vol: 0.7
   - type: 7
-    clip: {fileID: 8300000, guid: d301e2d0ce48a8547b59d48d0251fb52, type: 3}
+    clip: {fileID: 8300000, guid: ed89a315f4d694a4aa4113d61b6559b2, type: 3}
     vol: 0.7
   - type: 4
     clip: {fileID: 8300000, guid: aebfe4c62b254a648a8d019dece928a4, type: 3}
@@ -527,6 +529,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2192806737300590322, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055160849554247080, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
+      propertyPath: m_ScreenMatchMode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4788625768624870778, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
@@ -653,6 +659,51 @@ PrefabInstance:
       addedObject: {fileID: 860331892}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0fa74a05fa4e5469b439adf59ca3a8, type: 3}
+--- !u!1 &667677180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667677182}
+  - component: {fileID: 667677181}
+  m_Layer: 0
+  m_Name: GameStoreController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &667677181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667677180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ab93e30cd42491e961bc21e0a2e0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Raccoon.Store.GameStoreController
+  lstProduct: []
+--- !u!4 &667677182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667677180}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.42, y: 0.936, z: 0.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860331891
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,6 +927,7 @@ SceneRoots:
   - {fileID: 1469886782}
   - {fileID: 281222769}
   - {fileID: 604879335}
+  - {fileID: 667677182}
   - {fileID: 1301396760}
   - {fileID: 480243540}
   - {fileID: 172103310}

@@ -153,7 +153,8 @@ public class PopupCanvas : MonoBehaviour
         DailyReward,
         Skin,
         VipSub,
-        RemoveAds
+        RemoveAds,
+        RewardWin
     }
 
     public enum PopupAnimation

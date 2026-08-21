@@ -1,12 +1,15 @@
 using Raccoon;
 using Raccoon.Controller;
 using Raccoon.EnumHolder;
+using Raccoon.Purchase;
+using Raccoon.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class PopupSkin : PopupCanvas
 {
@@ -102,32 +105,72 @@ public class PopupSkin : PopupCanvas
 
     void SetDataItem(ItemSkin item, SoSkin data)
     {
-        CharacterData cd = GameData.Get.GetCharacterData();
         SoSkin skin = GameData.Get.currentSkinSOs.FirstOrDefault(s => s.typeSkin == data.typeSkin);
         bool isUse = false;
-        bool isUnlock = false;
         if (skin == data)
         {
             currentItem = item;
             isUse = true;
         }
-        if (cd.IsOwnSkin(data.typeSkin, data.id))
-        {
-            isUnlock = true;
-        }
-        item.SetData(data,isUnlock, isUse);
+        item.SetData(data, isUse);
 
     }
 
     protected void OnClick(ItemSkin item)
     {
         if (currentItem == item) return;
-        currentItem?.SetSelected(false);
-        currentItem = item;
-        currentItem?.SetSelected(true);
+        bool haveSkin = GameData.Get.GetCharacterData().IsOwnSkin(item.data.typeSkin, item.data.id);
+        if(haveSkin)
+        {
+            ChangeSkin(item);
+            return;
+        }
+        switch (item.data.typePay)
+        {
+            case EShopType.Ads:
+                ShowRewardedAd(success =>
+                {
+                    if (success)
+                    {
+                        ChangeSkin(item);
+                    }
+                    else
+                    {
+                        Fail("Ads chưa sẵn sàng hoặc bị bỏ giữa chừng");
+                    }
+                });
+                break;
 
-        GameData.Get.ChangeSkin(item.data);
-        HomeSceneUI.instance.previewCharacter.SetCharacter(item.data);
+            case EShopType.Currencies:
+                if (TrySpend(item.data.typeCurrency, item.data.price))
+                {
+                    GameData.Get.PayCurrency(item.data.typeCurrency, item.data.price);
+                    ChangeSkin(item);
+                }
+                else
+                {
+                    Fail("Không đủ tiền");
+                }
+                break;
+
+            case EShopType.IAP:
+                Purchase(item.data.productData, success =>
+                {
+                    if (success)
+                    {
+                        ChangeSkin(item);
+                    }
+                    else
+                    {
+                        Fail("Mua thất bại");
+                    }
+                });
+                break;
+
+            default:
+                ChangeSkin(item);
+                break;
+        }
     }
     private void ClickTap(TabTypeSkinUI uI)
     {
@@ -153,5 +196,41 @@ public class PopupSkin : PopupCanvas
 
     }
 
+    private bool TrySpend(TypeCurrency type, long amount)
+    {
+        // return CurrencyManager.Instance.TrySpend(type, amount);
+        long c = GameData.Get.GetCurrency(type);
+
+        return c >= amount;
+    }
+    private void ShowRewardedAd(Action<bool> callback)
+    {
+        // AdsManager.Instance.ShowRewarded(callback);
+        callback?.Invoke(true);
+    }
+
+    private void Purchase(IAPProductData product, Action<bool> callback)
+    {
+        //if (!GameStoreController.Get.IsSubscribedTo(product.id))
+        //{
+        //    GameStoreController.Get.OnBuyProduct(product, callback);
+        //}
+        GameStoreController.Get.OnBuyProduct(product, callback);
+    }
+    private void Fail(string reason)
+    {
+        print(reason);
+    }
+
+    private void ChangeSkin(ItemSkin item)
+    {
+        currentItem?.SetSelected(false);
+        currentItem = item;
+        currentItem?.SetSelected(true);
+
+
+        GameData.Get.ChangeSkin(item.data);
+        HomeSceneUI.instance.previewCharacter.SetCharacter(item.data);
+    }
 
 }

@@ -84,6 +84,7 @@ public class GamePlayController : MonoBehaviour
     {
         inputUI.SetActive(true);
         mainUiControl.gameObject.SetActive(true);
+        mainUiControl.Init(currentMapId);
         CameraController.instance.gameObject.SetActive(true);
         GameData.Get.PlayBgMusic(SoundType.InGame);
         player.Init();
@@ -169,6 +170,8 @@ public class GamePlayController : MonoBehaviour
     public void WinGame(Vector3 dirCheckpoint)
     {
         Debug.Log("[GamePlayController] Win");
+        mainUiControl.ShowWin();
+        GameData.Get.SetInFinishLineMap(currentMapId);
         PlayerController.instance.SetWin(dirCheckpoint);
     }
 
@@ -187,6 +190,23 @@ public class GamePlayController : MonoBehaviour
         //PoolByID.Instance.PushToPool(item);
         GamePool.Release(item);
     }
+    public void ClaimRewardWin(int scale = 1)
+    {
+        var datareward = GameData.Get.currentMap.rewardWin;
+        GameData.Get.SetClaimRewardWinMap(currentMapId);
+
+        foreach (var d in datareward)
+        {
+            GameData.Get.AddIncome(d.typeCurrency, d.amount * scale);
+        }
+    }
+    public void ShowRewardWin()
+    {
+        var datareward = GameData.Get.currentMap.rewardWin;
+        MainUiControl.instance.ShowReward(datareward);
+        
+    }
+
     #region UI
 
     public void ShowPopup(PopupCanvas.PopupType type)

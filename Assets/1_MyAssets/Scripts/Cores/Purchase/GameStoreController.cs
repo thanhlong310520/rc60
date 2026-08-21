@@ -350,6 +350,25 @@ namespace Raccoon.Store
             }
             return false;
         }
+
+
+
 #endif
+
+        public void OnBuyProduct(IAPProductData product, Action<bool> callback)
+        {
+            if (product == null) return;
+            //GameAds.Get.HideBanner();
+            BuyProductById(product.id, (success, id) =>
+            {
+                Debug.Log("on buy done ");
+                //GameAds.Get.ShowBanner();
+                
+                callback?.Invoke(success);
+
+                product.OnClick?.Invoke(success);
+                product.OnCheckButton?.Invoke(success);
+            });
+        }
     }
 }

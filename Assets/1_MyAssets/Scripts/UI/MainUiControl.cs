@@ -34,17 +34,18 @@ public class MainUiControl : MonoBehaviour
     public TMP_Text percentRun;
     public TMP_Text textIndexCheckPoint;
     public Slider sliderRun;
+    public RewardWinGame rewardWin;
 
 
-
-    //VipSubPopup vip;
-
-    private void Start()
+    public void Init(string idMap)
     {
-        //textWaitAds.gameObject.SetActive(false);
+        DataMap dt = PlayerData.Get.GetDataMap(idMap);
+        if(dt != null)
+        {
+            if (dt.inFinishLine && !dt.claimedRewardWin) rewardWin.OnEnableButton();
+            else rewardWin.OnDisableButton();
+        }
     }
-
-
     public void ShowPopup(PopupCanvas.PopupType type,UnityAction actionHide, object obj)
     {
         var popup = popups.First(p => p.popup == type);
@@ -70,13 +71,6 @@ public class MainUiControl : MonoBehaviour
         iconAvatar.sprite = icon;
     }
 
-    public bool IsPopupVipActive()
-    {
-        //if (vip == null) vip = LoadPopup(PopupCanvas.PopupType.VipSub).GetComponent<VipSubPopup>();
-        //if (vip == null) return false;
-        //if (vip.IsActive) return true;
-        return false;
-    }
 
     public void ClickButtonBackToHome()
     {
@@ -112,5 +106,16 @@ public class MainUiControl : MonoBehaviour
     {
         textIndexCheckPoint.text = $"{index}/{total}";
     }
+
+    public void ShowReward(List<IncomeData> data)
+    {
+        ShowPopup(PopupCanvas.PopupType.RewardWin,null,data);
+    }
+
+    public void ShowWin()
+    {
+        rewardWin.BlingWhenFirstWin();
+    }
+
 
 }

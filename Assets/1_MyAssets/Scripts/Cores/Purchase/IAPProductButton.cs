@@ -58,20 +58,12 @@ namespace Raccoon.Purchase
 
         public void OnClickBuy()
         {
-            if (productData == null) return;
-            //GameAds.Get.HideBanner();
-
-            GameStoreController.BuyProductById(productData.id, (success, id) =>
+            GameStoreController.Get.OnBuyProduct(productData, (success) =>
             {
-                Debug.Log("on buy done ");
-                //GameAds.Get.ShowBanner();
                 if (success)
                 {
                     OnBuySuccess();
                 }
-
-                productData.OnClick?.Invoke(success);
-                productData.OnCheckButton?.Invoke(success);
             });
 
         }

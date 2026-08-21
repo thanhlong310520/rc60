@@ -43,9 +43,9 @@ public class PopupDailyReward : PopupCanvas
     public void OnClickClaimCurrentItem()
     {
         if (currentItem == null) return;
-        if (!GameData.Get.CanClaimReward()) return;
+        if (!GameData.Get.CanClaimRewardDaily()) return;
         currentItem.SetClaimed(true);
-        GameData.Get.ClaimReward(new List<SoDailyReward> { currentItem.data });
+        GameData.Get.ClaimRewardDaily(new List<SoDailyReward> { currentItem.data });
         currentItem = null;
     }
 
@@ -63,12 +63,15 @@ public class PopupDailyReward : PopupCanvas
                 item.SetClaimed(true);
             }
         }
-        GameData.Get.ClaimReward(result);
+        GameData.Get.ClaimRewardDaily(result);
     }
 
     void SetData()
     {
         int currentDay = GameData.Get.GetDayReward();
+
+        print("Current day: " + currentDay);
+
         foreach (var item in listItem)
         {
             if(item.data.day < currentDay)
@@ -77,12 +80,16 @@ public class PopupDailyReward : PopupCanvas
             }
             else if(item.data.day == currentDay)
             {
-                if(GameData.Get.CanClaimReward())
+                if(GameData.Get.CanClaimRewardDaily())
                 {
                     currentItem = item;
                     item.SetClaimed(false);
                     item.SetActiveLock(false);
-                }    
+                }
+                else
+                {
+                    item.SetClaimed(false);
+                }
             }
             else
             {
