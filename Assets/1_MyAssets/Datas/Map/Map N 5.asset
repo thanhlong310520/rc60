@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa7811bfa93a8e458cdca1662d6e56e, type: 3}
+  m_Name: Map N 5
+  m_EditorClassIdentifier: Assembly-CSharp::MapData
+  mapId: map n5
+  avt: {fileID: 0}
+  rewardWin:
+  - typeCurrency: 1
+    icon: {fileID: 1157108876, guid: 79a0b8515194b5445b4cca46ff595e33, type: 3}
+    amount: 5
+  mapPrefab: {fileID: 5712734827349297191, guid: 3517f869f28ed22498278b5b1cc3fb44, type: 3}
