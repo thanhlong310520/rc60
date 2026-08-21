@@ -1,5 +1,6 @@
 using Raccoon;
 using Raccoon.Controller;
+using Raccoon.EnumHolder;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ public class GamePlayController : MonoBehaviour
     public Transform holderMap;
     public GameObject inputUI;
     public MainUiControl mainUiControl;
+    public CheckingInGame checkingame;
+
     [Header("Id map sẽ load khi vào game")]
     [Tooltip("Nếu để trống, sẽ lấy từ PlayerPrefs key 'SelectedMapId'")]
     [SerializeField] private string currentMapId;
@@ -56,7 +59,7 @@ public class GamePlayController : MonoBehaviour
             var startPoint = GetStartPoint();
             player.SetStartPoint(startPoint);
 
-            string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+            string idCheckpoint = GetIdLastCheckPoinInMapSaved();
             int index = currentMapController.GetIndexCheckpoint(idCheckpoint);
             ShowUICheckpoint(index, currentMapController.GetCheckpoints().Count);
 
@@ -88,6 +91,9 @@ public class GamePlayController : MonoBehaviour
         CameraController.instance.gameObject.SetActive(true);
         GameData.Get.PlayBgMusic(SoundType.InGame);
         player.Init();
+
+        InGameData ingameData = PlayerData.Get.GetInGameData(currentMapId);
+        checkingame.OnStartMap(ingameData);
     }
 
     /// <summary>
@@ -125,9 +131,15 @@ public class GamePlayController : MonoBehaviour
         return true;
     }
 
+    public string GetIdLastCheckPoinInMapSaved()
+    {
+        string idLastCheckpointSave = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+        if (idLastCheckpointSave == "") idLastCheckpointSave = "startPoint";
+        return idLastCheckpointSave;
+    }
     public Transform GetStartPoint()
     {
-        string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+        string idCheckpoint = GetIdLastCheckPoinInMapSaved();
 
         Debug.Log($"[GamePlayController] GetStartPoint: {currentMapId}");
         Debug.Log($"[GamePlayController]  LastCheckpoint: {idCheckpoint}");
@@ -135,17 +147,26 @@ public class GamePlayController : MonoBehaviour
         return currentMapController.GetCheckpointTransform(idCheckpoint);
     }
 
-    public void Resume()
+    public void OnPlayAgain(bool isSkip)
+    {
+        if (!isSkip) Resume();
+        else SetNextPoint();
+
+        checkingame.SetIsSkip(isSkip);
+
+    }
+
+    void Resume()
     {
         var startPoint = GetStartPoint();
         PlayerController.instance.SetStartPoint(startPoint);
         PlayerController.instance.ResetPlayer();
     }
 
-    public void SetNextPoint()
+    void SetNextPoint()
     {
 
-        string idCheckpoint = PlayerData.Get.GetLastCheckPointInMap(currentMapId);
+        string idCheckpoint = GetIdLastCheckPoinInMapSaved();
         var nextPoint = currentMapController.GetNextCheckpointTransform(idCheckpoint);
         PlayerController.instance.SetStartPoint(nextPoint.transform);
         PlayerController.instance.ResetPlayer();
@@ -155,6 +176,7 @@ public class GamePlayController : MonoBehaviour
     public void NextLevel()
     { 
         GameData.Get.SetWinMap(currentMapId);
+        checkingame.SetWinMap();
         GameData.Get.NextMap();
         GameData.Get.StopBgMusic(SoundType.InGame);
         SceneLoader.Instance.LoadScene("GamePlay");
@@ -164,8 +186,12 @@ public class GamePlayController : MonoBehaviour
     public bool SaveCheckPoint(string idCheckpoint)
     {
         Debug.Log("[GamePlayController] Save check point");
-
-        return GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
+        bool isSave = GameData.Get.SaveCheckPoint(currentMapId, idCheckpoint);
+        if(isSave)
+        {
+            checkingame.OnNewCheckPoint(idCheckpoint);
+        }
+        return isSave;
     }
     public void WinGame(Vector3 dirCheckpoint)
     {
@@ -209,15 +235,15 @@ public class GamePlayController : MonoBehaviour
 
     #region UI
 
-    public void ShowPopup(PopupCanvas.PopupType type)
-    {
-        if (CheckCanShowPopup())
-        {
-            MainUiControl.instance.ShowPopup(type, HidePopup, null);
-            SetCanAction(false);
-        }
+    //public void ShowPopup(PopupCanvas.PopupType type)
+    //{
+    //    if (CheckCanShowPopup())
+    //    {
+    //        MainUiControl.instance.ShowPopup(type, HidePopup, null);
+    //        SetCanAction(false);
+    //    }
 
-    }
+    //}
     public void ShowPopup(PopupCanvas.PopupType type, CharacterData data = null)
     {
         if (CheckCanShowPopup())
@@ -263,4 +289,11 @@ public class GamePlayController : MonoBehaviour
 
     public bool CanAction => canAction;
     #endregion
+
+    public void PlayerDead(FailReasonType type)
+    {
+        ShowPopup(PopupCanvas.PopupType.Dead);
+        string idLastCheckpointSave = GetIdLastCheckPoinInMapSaved();
+        checkingame.OnPlayerFail(idLastCheckpointSave,type);
+    }
 }

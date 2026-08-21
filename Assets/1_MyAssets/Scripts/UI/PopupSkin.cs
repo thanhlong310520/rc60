@@ -1,5 +1,4 @@
 using Raccoon;
-using Raccoon.Controller;
 using Raccoon.EnumHolder;
 using Raccoon.Purchase;
 using Raccoon.Store;
@@ -9,7 +8,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PopupSkin : PopupCanvas
 {

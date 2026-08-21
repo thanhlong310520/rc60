@@ -47,13 +47,13 @@ MonoBehaviour:
   vfxs:
   - type: 0
     vfxPrefabs:
-    - {fileID: 5846832480947890362, guid: e8b5ea0d216859d4c8d5678c72a3deab, type: 3}
+    - {fileID: 1071897520535830, guid: 969c62a11267a974e88d421b4943ec5f, type: 3}
   - type: 1
     vfxPrefabs:
     - {fileID: 1770312703653136, guid: 69f5a9eca5f20c94886a4ced31bea3d0, type: 3}
   - type: 2
     vfxPrefabs:
-    - {fileID: 5558933412750036001, guid: 5811644a7a9f2fe4fbe2cb261bbf4eb3, type: 3}
+    - {fileID: 1310206255924646, guid: 2fba95bddfa051a42a439494aaf34aa1, type: 3}
   - type: 3
     vfxPrefabs:
     - {fileID: 1129530794317534, guid: 232b415992ea7064db7dbc2acfdc40b6, type: 3}

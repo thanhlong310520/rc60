@@ -19,7 +19,7 @@ public class PlayerEffect : MonoBehaviour
             if (!isFalling)
             {
                 // Play landing effect
-                VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.InGround, transform.position + Vector3.up);
+                VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.InGround, transform.position);
 
             }
         }

@@ -21,6 +21,7 @@ namespace Raccoon
         public string version;
         public string currentMap;
         public CharacterData characterData;
+        public List<InGameData> ingameDatas;
         public List<string> actionTutDone;
         public Dictionary<string, DataMap> listDataMap;
         public bool isVipIAP;
@@ -37,10 +38,12 @@ namespace Raccoon
             isVipIAP = false;
             currentMap = "";
             characterData ??= new CharacterData("Player", "Player");
+            ingameDatas ??= new List<InGameData>();
         }
 
         public void FixData()
         {
+            ingameDatas ??= new List<InGameData>();
             characterData ??= new CharacterData("Player", "Player");
             actionTutDone ??= new List<string>();
             listDataMap ??= new Dictionary<string,DataMap>();
@@ -273,6 +276,22 @@ namespace Raccoon
         }
         #endregion
 
+
+        #region InGameData
+        public InGameData GetInGameData(string idMap)
+        {
+            var data = ingameDatas.FirstOrDefault(d=>d.mapID == idMap);
+            if (data == null) data = CreateIngameData(idMap);
+            return data;
+        }
+
+        InGameData CreateIngameData(string idMap)
+        {
+            InGameData result = new InGameData(idMap);
+            ingameDatas.Add(result);
+            return result;
+        }
+        #endregion
     }
 
     [MessagePackObject(keyAsPropertyName: true)]

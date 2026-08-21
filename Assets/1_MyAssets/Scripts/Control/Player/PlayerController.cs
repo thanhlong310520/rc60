@@ -1,4 +1,5 @@
-﻿using Raccoon.InputCtr;
+﻿using Raccoon.EnumHolder;
+using Raccoon.InputCtr;
 using Raccoon.Player;
 using System;
 using System.Collections;
@@ -134,11 +135,11 @@ namespace Raccoon.Controller
 
         }
 
-        public void Dead()
+        public void Dead(FailReasonType type)
         {
             Debug.Log(($"[PlayerController] Dead"));
             modelHolder.gameObject.SetActive(false);
-            GamePlayController.instance.ShowPopup(PopupCanvas.PopupType.Dead, data);
+            GamePlayController.instance.PlayerDead(type);
             movement.SetCanMove(false);
             SetState(EPlayerState.Dead);
             VfxCtrl.instance.SpawnRandomVfx(Raccoon.EnumHolder.TypeVFX.Dead, transform.position + Vector3.up);

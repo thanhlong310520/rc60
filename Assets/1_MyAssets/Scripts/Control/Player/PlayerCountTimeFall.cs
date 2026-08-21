@@ -39,7 +39,7 @@ public class PlayerCountTimeFall : MonoBehaviour
         currentTimeFall -= Time.deltaTime;
         if(currentTimeFall < 0)
         {
-            PlayerController.instance.Dead();
+            PlayerController.instance.Dead(Raccoon.EnumHolder.FailReasonType.Fall);
         }
     }
 }

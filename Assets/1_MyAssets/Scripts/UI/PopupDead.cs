@@ -4,7 +4,7 @@ public class PopupDead : PopupCanvas
 {
     public void OnClickSkipLevel()
     {
-        GamePlayController.instance.SetNextPoint();
+        GamePlayController.instance.OnPlayAgain(false);
         Hide();
 
 
@@ -12,7 +12,7 @@ public class PopupDead : PopupCanvas
 
     public void OnClickResume()
     {
-        GamePlayController.instance.Resume();
+        GamePlayController.instance.OnPlayAgain(true);
         Hide();
     }
 }

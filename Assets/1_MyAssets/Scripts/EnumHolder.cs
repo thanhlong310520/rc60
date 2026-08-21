@@ -32,12 +32,6 @@ namespace Raccoon.EnumHolder
         InGround, Jump, Coin, Dead, Spawn,
     }
 
-    public enum SoundType
-    {
-        Button, ContactSlot, CollectCoin, ContactWave, BaseBatAttack, SaveLoot, UpgradeSuccess, LootItem, FootStep, ChangeMap,
-        Jump, MapSound, Steal, BuyFall, Shield, ChangeMap1,
-    }
-
     public enum TypeSkin
     {
         Face, Hair, Shirt, Trouser, Shoes, Bag
@@ -53,5 +47,13 @@ namespace Raccoon.EnumHolder
         Ads,
         Currencies,
         IAP,
+    }
+    public enum Entry_SourceType
+    {
+        NextMap, NewMap, Retry
+    }
+    public enum FailReasonType
+    {
+        Fall, Obstacle
     }
 }

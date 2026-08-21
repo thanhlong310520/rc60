@@ -302,6 +302,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202037047}
   m_CullTransparentMesh: 1
+--- !u!1 &240790370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240790372}
+  - component: {fileID: 240790371}
+  m_Layer: 0
+  m_Name: Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &240790371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240790370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9f684109908040aec859525cb8245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckingInGame
+--- !u!4 &240790372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240790370}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 584386464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253756585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1746,7 @@ MonoBehaviour:
   holderMap: {fileID: 323485684}
   inputUI: {fileID: 1805493114}
   mainUiControl: {fileID: 403005563}
+  checkingame: {fileID: 240790371}
   currentMapId: 
   player: {fileID: 1000431732}
 --- !u!4 &584386464
@@ -1719,6 +1764,7 @@ Transform:
   m_Children:
   - {fileID: 134769318}
   - {fileID: 521428780}
+  - {fileID: 240790372}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619322779

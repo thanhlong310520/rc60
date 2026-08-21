@@ -21,7 +21,6 @@ namespace Raccoon
         [SerializeField] List<SoSkin> defaultSkin;
 
         public DailyRewardTimeChecker dailyRewardTimeChecker = new DailyRewardTimeChecker();
-        public CheckingInGame checkingame;
 
         public List<AudioClip> audioBg;
         [SerializeField] List<SoundData> listSoundFX;
@@ -58,50 +57,50 @@ namespace Raccoon
 
         public void CheckSubscribe()
         {
-            bool noAds = false;
-            bool vip = false;
-            foreach (var sub in GameStoreController.Get.lstProduct)
-            {
-                if (sub.productType != UnityEngine.Purchasing.ProductType.Subscription) continue;
-                GameStoreController.Get.CheckRestoreProductById(sub.id, (restore, id) =>
-                {
-                    if (restore)
-                    {
-                        sub.OnSendCheckButton(true);
-                        if (sub.has_noads)
-                        {
-                            noAds = true;
-                            //PlayerData.Get.RemoveAds();
-                        }
-                        if (sub.vip)
-                        {
-                            vip = true;
-                            //PlayerData.Get.OnVip();
-                        }
-                    }
-                    //else
-                    //{
-                    //    if (sub.has_noads)
-                    //    {
-                    //        PlayerData.Get.OnAds();
-                    //    }
-                    //    if (sub.vip)
-                    //    {
-                    //        PlayerData.Get.RemoveVip();
-                    //    }
-                    //}
-                });
-            }
+            //bool noAds = false;
+            //bool vip = false;
+            //foreach (var sub in GameStoreController.Get.lstProduct)
+            //{
+            //    if (sub.productType != UnityEngine.Purchasing.ProductType.Subscription) continue;
+            //    GameStoreController.Get.CheckRestoreProductById(sub.id, (restore, id) =>
+            //    {
+            //        if (restore)
+            //        {
+            //            sub.OnSendCheckButton(true);
+            //            if (sub.has_noads)
+            //            {
+            //                noAds = true;
+            //                //PlayerData.Get.RemoveAds();
+            //            }
+            //            if (sub.vip)
+            //            {
+            //                vip = true;
+            //                //PlayerData.Get.OnVip();
+            //            }
+            //        }
+            //        //else
+            //        //{
+            //        //    if (sub.has_noads)
+            //        //    {
+            //        //        PlayerData.Get.OnAds();
+            //        //    }
+            //        //    if (sub.vip)
+            //        //    {
+            //        //        PlayerData.Get.RemoveVip();
+            //        //    }
+            //        //}
+            //    });
+            //}
 
-            if (noAds)
-                PlayerData.Get.RemoveAds();
-            else
-                PlayerData.Get.OnAds();
+            //if (noAds)
+            //    PlayerData.Get.RemoveAds();
+            //else
+            //    PlayerData.Get.OnAds();
             
-            if(vip)
-                PlayerData.Get.OnVip();
-            else
-                PlayerData.Get.RemoveVip();
+            //if(vip)
+            //    PlayerData.Get.OnVip();
+            //else
+            //    PlayerData.Get.RemoveVip();
 
         }
 
@@ -237,7 +236,8 @@ namespace Raccoon
 
             DataMap dt = PlayerData.Get.GetDataMap(idMap);
             dt.Reset();
-
+            InGameData ig = PlayerData.Get.GetInGameData(idMap);
+            ig.Reset();
             print("[GameData] reset map " + idMap + " done");
             print("[GameData] list checkpoint " + dt.listCheckPoint.Count); 
         }
@@ -427,6 +427,8 @@ namespace Raccoon
             SceneLoader.Instance.LoadScene("Home");
             StopBgMusic(SoundType.InGame);
         }
+
+
     }
 
     [Serializable] struct SoundData

@@ -7,7 +7,7 @@ public class LavaObject : MonoBehaviour
     {
         if (other.transform == PlayerController.instance.transform)
         {
-            PlayerController.instance.Dead();
+            PlayerController.instance.Dead(Raccoon.EnumHolder.FailReasonType.Obstacle);
         }
     }
 }
